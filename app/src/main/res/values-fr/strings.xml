@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FIrstAndHelloWorld</string>
+    <string name="welcome_text">Bonjour, patron de Mileanos !</string>
+    <string name="main_button_label">Appuie sur moi, patron</string>
+    <string name="hint_name">Quel est ton nom, patron ?</string>
+    <string name="switched_text">Bravo, patron ! Texte modifié.</string>
+</resources>

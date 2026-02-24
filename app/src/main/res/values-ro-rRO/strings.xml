@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FIrstAndHelloWorld</string>
+    <string name="welcome_text">Salutare, patroane!</string>
+    <string name="main_button_label">Apasa pe mine patroane</string>
+    <string name="hint_name">Ce nume ai patroane?</string>
+    <string name="switched_text">Bravo, patroane! Textul s-a schimbat.</string>
+</resources>

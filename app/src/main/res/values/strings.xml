@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FIrstAndHelloWorld</string>
+    <string name="welcome_text">Hello Mileanos World!</string>
+    <string name="main_button_label">Apasa pe mine patroane</string>
+    <string name="hint_name">Ce nume ai patroane?</string>
+    <string name="switched_text">Bravo, patroane! Textul s-a schimbat.</string>
+</resources>
