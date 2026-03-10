@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FIrstAndHelloWorld">
         <activity
+            android:name=".AddMasinaActivity"
+            android:exported="false" />
+        <activity
             android:name=".ThirdActivity"
             android:exported="false" />
         <activity
@@ -25,8 +28,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

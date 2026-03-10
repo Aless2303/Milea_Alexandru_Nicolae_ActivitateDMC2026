@@ -12,8 +12,74 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/second_button_label"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="32dp" />
+
+    <Button
+        android:id="@+id/button_to_masin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adauga masina"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/tvMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marca: -"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_to_masin"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:id="@+id/tvElectrica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Electrica: -"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMarca"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tvAn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="An fabricatie: -"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvElectrica"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tvCuloare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Culoare: -"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAn"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tvViteza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rating viteza: -"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCuloare"
+        android:layout_marginTop="8dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
