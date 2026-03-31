@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,18 +16,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-// Importam ArrayList — lista dinamica in care stocam obiectele Masina
 import java.util.ArrayList;
 
 public class SecondActivity extends AppCompatActivity {
 
-    // Cerinta 3: Lista de obiecte Masina — fiecare masina adaugata se pune aici
-    // ArrayList = lista care creste automat cand adaugi elemente (nu are dimensiune fixa)
+    // Lista de obiecte Masina — fiecare masina adaugata/modificata se pastreaza aici
     private ArrayList<Masina> listaMasini = new ArrayList<>();
 
-    // Cerinta 5: ArrayAdapter = "punte" intre lista de date (ArrayList) si interfata (ListView)
-    // Adapter-ul ia fiecare Masina din lista, apeleaza toString() si o afiseaza ca rand in ListView
-    private ArrayAdapter<Masina> adapter;
+    // Cerinta 2 Lab 6: Adapter personalizat in loc de ArrayAdapter generic
+    // MasinaAdapter controleaza cum arata fiecare rand din ListView (layout propriu)
+    private MasinaAdapter adapter;
+
+    // Variabila care tine minte pozitia obiectului selectat pentru editare
+    // -1 inseamna "nu editam nimic, adaugam unul nou"
+    private int editPosition = -1;
 
     // Launcher pentru ThirdActivity — primeste rezultat inapoi (mesaj + suma)
     private final ActivityResultLauncher<Intent> thirdActivityLauncher =
@@ -40,18 +41,26 @@ public class SecondActivity extends AppCompatActivity {
                 }
             });
 
-    // Cerinta 3: Launcher pentru AddMasinaActivity — primeste obiectul Masina inapoi
-    // Cand AddMasinaActivity face finish(), acest callback se executa automat
+    // Launcher pentru AddMasinaActivity — folosit atat pentru ADAUGARE cat si EDITARE
+    // Diferenta o face editPosition: daca e -1 = adaugam, altfel = modificam la pozitia respectiva
     private final ActivityResultLauncher<Intent> addMasinaLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    // getParcelableExtra extrage obiectul Masina din Intent (deserializare Parcelable)
+                    // Cerinta 4: Extragem obiectul Masina prin Parcelable
                     Masina masina = result.getData().getParcelableExtra("masina");
                     if (masina != null) {
-                        // Adaugam masina in lista
-                        listaMasini.add(masina);
-                        // notifyDataSetChanged() spune adapter-ului ca lista s-a schimbat
-                        // si ListView-ul trebuie redesenat cu noile date
+                        if (editPosition >= 0) {
+                            // Cerinta 3 Lab 6: EDITARE — modificam obiectul existent la pozitia salvata
+                            // set() inlocuieste elementul de la index cu noul obiect
+                            // NU adaugam altul, ci il INLOCUIM pe cel vechi
+                            listaMasini.set(editPosition, masina);
+                        } else {
+                            // ADAUGARE — obiect nou in lista
+                            listaMasini.add(masina);
+                        }
+                        // Resetam pozitia de editare
+                        editPosition = -1;
+                        // Notificam adapter-ul ca lista s-a schimbat — ListView se redeseneaza
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -71,38 +80,35 @@ public class SecondActivity extends AppCompatActivity {
 
         Button buttonSecondActivity = findViewById(R.id.button3);
         Button buttonSecondActivityToCAR = findViewById(R.id.button_to_masin);
-
-        // Cerinta 5: Gasim ListView-ul din layout
         ListView listViewMasini = findViewById(R.id.listViewMasini);
 
-        // Cerinta 5: Cream ArrayAdapter-ul
-        // Parametri: context (this), layout-ul pentru fiecare rand (simple_list_item_1 = un TextView simplu),
-        // si lista de date (listaMasini). Adapter-ul apeleaza automat toString() pe fiecare Masina.
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaMasini);
-
-        // Conectam adapter-ul la ListView — acum ListView stie de unde sa ia datele
+        // Cerinta 2 Lab 6: Folosim MasinaAdapter (personalizat) in loc de ArrayAdapter generic
+        // MasinaAdapter foloseste layout-ul item_masina.xml cu 3 linii de text per rand
+        adapter = new MasinaAdapter(this, listaMasini);
         listViewMasini.setAdapter(adapter);
 
-        // Cerinta 6: La click pe un element din ListView, afisam obiectul intr-un Toast
-        // position = indexul elementului apasat in lista (0, 1, 2...)
+        //aici apas pe obiect afisat si se deschide sa l modific.
+        // Cerinta 3 Lab 6: La click pe un element din ListView, deschidem AddMasinaActivity
+        // pentru EDITARE (nu mai afisam Toast ca inainte)
+        // Trimitem obiectul Masina selectat prin Parcelable + pozitia in lista
         listViewMasini.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Luam obiectul Masina de la pozitia apasata
-                Masina masinaSelectata = listaMasini.get(position);
-                // toString() se apeleaza automat cand concatenam cu String
-                Toast.makeText(SecondActivity.this, masinaSelectata.toString(), Toast.LENGTH_LONG).show();
+                // Salvam pozitia selectata — o folosim in callback la intoarcere
+                editPosition = position;
+
+                // Cerinta 4: Trimitem obiectul Masina prin Parcelable catre AddMasinaActivity
+                Intent intent = new Intent(SecondActivity.this, AddMasinaActivity.class);
+                intent.putExtra("masina", listaMasini.get(position));
+                addMasinaLauncher.launch(intent);
             }
         });
 
-        // Cerinta 7: La long click (apasare lunga) pe un element, il stergem din lista
-        // return true = am consumat evenimentul (nu se mai propaga la click normal)
+        // Cerinta 7 Lab 5: Long click — stergem din lista + ListView
         listViewMasini.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                // Stergem din ArrayList la pozitia respectiva
                 listaMasini.remove(position);
-                // Notificam adapter-ul ca lista s-a modificat — ListView se redeseneaza
                 adapter.notifyDataSetChanged();
                 Toast.makeText(SecondActivity.this, "Masina stearsa!", Toast.LENGTH_SHORT).show();
                 return true;
@@ -123,10 +129,12 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
-        // Butonul care deschide AddMasinaActivity (formularul de adaugare masina)
+        // Butonul care deschide AddMasinaActivity pentru ADAUGARE (masina noua)
+        // editPosition ramane -1, deci in callback se va face add(), nu set()
         buttonSecondActivityToCAR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editPosition = -1;
                 Intent intent = new Intent(SecondActivity.this, AddMasinaActivity.class);
                 addMasinaLauncher.launch(intent);
             }

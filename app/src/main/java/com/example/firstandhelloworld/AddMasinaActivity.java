@@ -13,9 +13,10 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 
-// Importam Calendar si Date pentru a lucra cu date calendaristice
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +51,37 @@ public class AddMasinaActivity extends AppCompatActivity {
                 CuloareMasina.values()
         );
         spinnerCuloare.setAdapter(adapter);
+
+        // Cerinta 3 Lab 6: Verificam daca am primit un obiect Masina prin Intent (editare)
+        // getParcelableExtra returneaza null daca nu a fost trimis nimic (adaugare noua)
+        // Daca exista, pre-completam TOATE campurile cu datele obiectului primit
+        Masina masinaDeEditat = getIntent().getParcelableExtra("masina");
+        if (masinaDeEditat != null) {
+            // Pre-completam EditText-ul pentru marca cu valoarea existenta
+            editTextMarca.setText(masinaDeEditat.getMarca());
+            // Pre-completam anul de fabricatie
+            editTextAn.setText(String.valueOf(masinaDeEditat.getAnFabricatie()));
+            // Pre-completam checkbox-ul (bifat/nebifat)
+            checkboxElectrica.setChecked(masinaDeEditat.isEsteElectrica());
+            // Pre-selectam culoarea corecta in Spinner
+            // Cautam indexul valorii enum in adapter si il setam ca selectat
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (adapter.getItem(i) == masinaDeEditat.getCuloare()) {
+                    spinnerCuloare.setSelection(i);
+                    break;
+                }
+            }
+            // Pre-completam RatingBar-ul cu viteza existenta
+            // setRating primeste float, vitezaMaxima e double, deci facem cast
+            ratingBar.setRating((float) masinaDeEditat.getVitezaMaxima());
+            // Pre-completam data daca exista
+            if (masinaDeEditat.getDataFabricatiei() != null) {
+                dataFabricatiei = masinaDeEditat.getDataFabricatiei();
+                // Afisam data pe buton in format dd/MM/yyyy
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                btnSelectData.setText(sdf.format(dataFabricatiei));
+            }
+        }
 
         // La click pe butonul de data, deschidem un DatePickerDialog
         // Calendar.getInstance() ne da data curenta (an, luna, zi) ca valori implicite

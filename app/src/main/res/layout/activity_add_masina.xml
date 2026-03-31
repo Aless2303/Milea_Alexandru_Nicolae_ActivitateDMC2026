@@ -8,38 +8,17 @@
     android:fillViewport="true"
     android:scrollbars="none">
 
-    <FrameLayout
+    <!-- Removed extra FrameLayout wrapper to make the ConstraintLayout a direct child of ScrollView
+         This ensures correct measuring and enables scrolling on small screens. -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!-- ═══ AMBIENT GLOW EFFECT ═══ -->
-        <View
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="-80dp"
-            android:layout_marginEnd="-80dp"
-            android:background="@drawable/glow_circle"
-            android:alpha="0.3" />
-
-        <View
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_gravity="bottom|start"
-            android:layout_marginBottom="-60dp"
-            android:layout_marginStart="-60dp"
-            android:background="@drawable/glow_circle"
-            android:alpha="0.2" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="24dp"
-            tools:context=".AddMasinaActivity">
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="24dp"
+        tools:context=".AddMasinaActivity">
 
             <!-- ═══ HEADER: CAR ICON + TITLE ═══ -->
             <ImageView
@@ -367,6 +346,4 @@
                 app:layout_constraintTop_toBottomOf="@+id/cardData" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </FrameLayout>
 </ScrollView>
