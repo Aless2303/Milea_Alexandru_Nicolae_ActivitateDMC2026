@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FIrstAndHelloWorld">
+        <!-- Cerinta 4 Lab 7: Activitate de setari (dimensiune + culoare text) -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".AddMasinaActivity"
             android:exported="false" />

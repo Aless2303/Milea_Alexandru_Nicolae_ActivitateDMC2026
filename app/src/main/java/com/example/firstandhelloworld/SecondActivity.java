@@ -16,6 +16,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class SecondActivity extends AppCompatActivity {
@@ -54,6 +59,8 @@ public class SecondActivity extends AppCompatActivity {
                             // set() inlocuieste elementul de la index cu noul obiect
                             // NU adaugam altul, ci il INLOCUIM pe cel vechi
                             listaMasini.set(editPosition, masina);
+                            // Rescriem fisierul complet cu lista actualizata (inclusiv modificarea)
+                            rescrieFisier();
                         } else {
                             // ADAUGARE — obiect nou in lista
                             listaMasini.add(masina);
@@ -87,6 +94,25 @@ public class SecondActivity extends AppCompatActivity {
         adapter = new MasinaAdapter(this, listaMasini);
         listViewMasini.setAdapter(adapter);
 
+        // Setam callback-ul pe adapter: cand se apasa butonul ❌ de pe un rand,
+        // adapter-ul ne notifica prin onDeleteClick cu pozitia randului
+        adapter.setOnDeleteClickListener(new MasinaAdapter.OnDeleteClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                // Stergem masina din lista
+                listaMasini.remove(position);
+                // Notificam adapter-ul ca lista s-a schimbat — ListView se redeseneaza
+                adapter.notifyDataSetChanged();
+                // Rescriem fisierul cu lista actualizata (fara masina stearsa)
+                rescrieFisier();
+                Toast.makeText(SecondActivity.this, "Masina stearsa!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Citim masinile salvate anterior din fisierul "masini.txt" la pornirea aplicatiei
+        // Astfel datele PERSISTA intre sesiuni — utilizatorul vede masinile adaugate anterior
+        citesteDinFisier();
+
         //aici apas pe obiect afisat si se deschide sa l modific.
         // Cerinta 3 Lab 6: La click pe un element din ListView, deschidem AddMasinaActivity
         // pentru EDITARE (nu mai afisam Toast ca inainte)
@@ -104,13 +130,17 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
-        // Cerinta 7 Lab 5: Long click — stergem din lista + ListView
+        // Cerinta 3 Lab 7: Long click — salvam masina selectata in fisierul de FAVORITE
+        // Fisierul "masini_favorite.txt" este SEPARAT de "masini.txt" (fisierul general)
+        // MODE_APPEND = adaugam la sfarsitul fisierului, nu suprascriem
         listViewMasini.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                listaMasini.remove(position);
-                adapter.notifyDataSetChanged();
-                Toast.makeText(SecondActivity.this, "Masina stearsa!", Toast.LENGTH_SHORT).show();
+                // Luam obiectul Masina de la pozitia selectata
+                Masina masinaFavorita = listaMasini.get(position);
+                // Salvam in fisierul separat de favorite
+                salvareInFisierFavorite(masinaFavorita);
+                Toast.makeText(SecondActivity.this, "Masina adaugata la favorite!", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -139,5 +169,81 @@ public class SecondActivity extends AppCompatActivity {
                 addMasinaLauncher.launch(intent);
             }
         });
+
+        // Cerinta 4 Lab 7: Buton care deschide SettingsActivity (activitate de setari)
+        Button buttonSettings = findViewById(R.id.button_settings);
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SecondActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // Cerinta 3 Lab 7: Metoda care salveaza un obiect Masina in fisierul de FAVORITE
+    // Fisierul se numeste "masini_favorite.txt" — SEPARAT de "masini.txt"
+    // MODE_APPEND = adaugam la sfarsitul fisierului existent
+    private void salvareInFisierFavorite(Masina masina) {
+        try {
+            // openFileOutput deschide/creeaza fisierul in memoria interna
+            // "masini_favorite.txt" = fisier separat doar pentru favorite
+            FileOutputStream fos = openFileOutput("masini_favorite.txt", MODE_APPEND);
+            // Scriem toString()-ul masinii + newline ca separator
+            String linie = masina.toString() + "\n";
+            fos.write(linie.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Metoda care citeste masinile din fisierul "masini.txt" la pornirea aplicatiei
+    // Fiecare linie = un obiect Masina salvat prin toString()
+    // Folosim Masina.fromString() pentru a reconstrui obiectul din text
+    private void citesteDinFisier() {
+        try {
+            // openFileInput deschide fisierul din memoria interna pentru CITIRE
+            FileInputStream fis = openFileInput("masini.txt");
+            // BufferedReader + InputStreamReader = citim fisierul linie cu linie
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+            String linie;
+            // readLine() returneaza o linie sau null cand s-a terminat fisierul
+            while ((linie = reader.readLine()) != null) {
+                // Ignoram liniile goale
+                if (!linie.trim().isEmpty()) {
+                    // fromString() parseaza linia si creeaza un obiect Masina
+                    Masina masina = Masina.fromString(linie);
+                    if (masina != null) {
+                        listaMasini.add(masina);
+                    }
+                }
+            }
+            reader.close();
+            // Notificam adapter-ul ca lista s-a schimbat — ListView se redeseneaza
+            adapter.notifyDataSetChanged();
+        } catch (IOException e) {
+            // Fisierul nu exista inca (prima rulare) — nu e o eroare
+            e.printStackTrace();
+        }
+    }
+
+    // Metoda care RESCRIE complet fisierul "masini.txt" cu lista curenta
+    // Se apeleaza dupa stergere: nu putem "scoate o linie" dintr-un fisier,
+    // asa ca il suprascriem cu tot ce a ramas in lista
+    // MODE_PRIVATE (fara APPEND) = suprascrie fisierul de la zero
+    private void rescrieFisier() {
+        try {
+            // MODE_PRIVATE = suprascrie tot (nu APPEND)
+            FileOutputStream fos = openFileOutput("masini.txt", MODE_PRIVATE);
+            // Scriem fiecare masina ramasa in lista, cate una pe linie
+            for (Masina m : listaMasini) {
+                String linie = m.toString() + "\n";
+                fos.write(linie.getBytes());
+            }
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

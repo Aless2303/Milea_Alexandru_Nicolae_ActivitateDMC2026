@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,10 +20,18 @@ import java.util.Locale;
 // CUM arata fiecare rand (getView), in loc sa folosim doar toString()
 public class MasinaAdapter extends ArrayAdapter<Masina> {
 
+    // Interfata callback — SecondActivity o implementeaza ca sa stie cand se apasa Delete
+    // Adapter-ul nu stie cum sa stearga din fisier, dar SecondActivity stie
+    public interface OnDeleteClickListener {
+        void onDeleteClick(int position);
+    }
+
     // Context = referinta la activitate (necesar pentru LayoutInflater)
     private final Context context;
     // Lista de obiecte Masina — aceeasi lista din SecondActivity
     private final List<Masina> masini;
+    // Referinta la listener-ul de stergere (SecondActivity)
+    private OnDeleteClickListener deleteListener;
 
     // Constructor: primeste contextul si lista de masini
     // super() apeleaza constructorul ArrayAdapter care leaga adapter-ul de lista
@@ -30,6 +39,11 @@ public class MasinaAdapter extends ArrayAdapter<Masina> {
         super(context, R.layout.item_masina, masini);
         this.context = context;
         this.masini = masini;
+    }
+
+    // Metoda care permite SecondActivity sa se inregistreze ca listener de stergere
+    public void setOnDeleteClickListener(OnDeleteClickListener listener) {
+        this.deleteListener = listener;
     }
 
     // getView() este metoda cheie — apelata de ListView pentru FIECARE rand vizibil
@@ -53,6 +67,9 @@ public class MasinaAdapter extends ArrayAdapter<Masina> {
         TextView tvDetalii = convertView.findViewById(R.id.tvItemDetalii);
         TextView tvExtra = convertView.findViewById(R.id.tvItemExtra);
 
+        // Gasim butonul de stergere din layout
+        ImageButton btnDelete = convertView.findViewById(R.id.btnDelete);
+
         // Linia 1: Marca (mare, bold)
         tvMarca.setText(masina.getMarca());
 
@@ -69,6 +86,17 @@ public class MasinaAdapter extends ArrayAdapter<Masina> {
         tvExtra.setText("Electric: " + (masina.isEsteElectrica() ? "Da" : "Nu") +
                 "  |  Viteza: " + masina.getVitezaMaxima() +
                 "  |  Data: " + dataText);
+
+        // La click pe butonul ❌, notificam SecondActivity prin callback
+        // SecondActivity se ocupa de stergerea din lista + rescrierea fisierului
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (deleteListener != null) {
+                    deleteListener.onDeleteClick(position);
+                }
+            }
+        });
 
         // Returnam View-ul completat — ListView il afiseaza ca rand
         return convertView;

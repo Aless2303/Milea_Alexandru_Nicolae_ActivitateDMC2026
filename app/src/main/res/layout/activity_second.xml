@@ -27,13 +27,24 @@
         app:layout_constraintTop_toBottomOf="@+id/button3"
         android:layout_marginTop="16dp" />
 
+    <!-- Cerinta 4 Lab 7: Buton care deschide activitatea de setari -->
+    <Button
+        android:id="@+id/button_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⚙️ Setari"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_to_masin"
+        android:layout_marginTop="8dp" />
+
     <!-- Cerinta 5: ListView afiseaza lista de obiecte Masina folosind toString() -->
     <ListView
         android:id="@+id/listViewMasini"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/button_to_masin"
+        app:layout_constraintTop_toBottomOf="@+id/button_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

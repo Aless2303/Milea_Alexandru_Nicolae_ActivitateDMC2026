@@ -1,38 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Cerinta 2 Lab 6: Layout personalizat pentru un rand din ListView.
      Fiecare rand afiseaza detaliile unei Masina pe mai multe linii,
-     in loc de un singur text (cum facea ArrayAdapter implicit cu simple_list_item_1). -->
+     in loc de un singur text (cum facea ArrayAdapter implicit cu simple_list_item_1).
+     Contine si un buton de stergere in dreapta. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:descendantFocusability="blocksDescendants">
 
-    <!-- Marca — afisata mare si bold, ca titlu principal al randului -->
-    <TextView
-        android:id="@+id/tvItemMarca"
-        android:layout_width="wrap_content"
+    <!-- Container pentru cele 3 linii de text — ocupa tot spatiul disponibil (weight=1) -->
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="#000000" />
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <!-- An fabricatie + Culoare — pe aceeasi linie, informatii secundare -->
-    <TextView
-        android:id="@+id/tvItemDetalii"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:textSize="14sp"
-        android:textColor="#555555" />
+        <!-- Marca — afisata mare si bold, ca titlu principal al randului -->
+        <TextView
+            android:id="@+id/tvItemMarca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
 
-    <!-- Electrica + Viteza + Data — pe a treia linie, informatii aditionale -->
-    <TextView
-        android:id="@+id/tvItemExtra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:textSize="12sp"
-        android:textColor="#888888" />
+        <!-- An fabricatie + Culoare — pe aceeasi linie, informatii secundare -->
+        <TextView
+            android:id="@+id/tvItemDetalii"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="14sp"
+            android:textColor="#555555" />
+
+        <!-- Electrica + Viteza + Data — pe a treia linie, informatii aditionale -->
+        <TextView
+            android:id="@+id/tvItemExtra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
+            android:textColor="#888888" />
+
+    </LinearLayout>
+
+    <!-- Buton de stergere — afisat in dreapta fiecarui rand -->
+    <!-- focusable=false previne interceptarea click-ului de pe randul din ListView -->
+    <ImageButton
+        android:id="@+id/btnDelete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:src="@android:drawable/ic_menu_delete"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Sterge masina"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
 </LinearLayout>

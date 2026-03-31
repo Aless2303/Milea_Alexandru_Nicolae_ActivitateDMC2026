@@ -2,8 +2,12 @@ package com.example.firstandhelloworld;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
@@ -12,7 +16,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,6 +35,8 @@ public class AddMasinaActivity extends AppCompatActivity {
 
     // Variabila care stocheaza data selectata de utilizator (null pana alege o data)
     private Date dataFabricatiei = null;
+    // true daca editam o masina existenta, false daca adaugam una noua
+    private boolean esteEditare = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,9 @@ public class AddMasinaActivity extends AppCompatActivity {
         // Daca exista, pre-completam TOATE campurile cu datele obiectului primit
         Masina masinaDeEditat = getIntent().getParcelableExtra("masina");
         if (masinaDeEditat != null) {
+            // Marcam ca suntem in modul EDITARE — nu vom salva in fisier la sfarsit
+            // (fisierul se rescrie complet de SecondActivity dupa editare)
+            esteEditare = true;
             // Pre-completam EditText-ul pentru marca cu valoarea existenta
             editTextMarca.setText(masinaDeEditat.getMarca());
             // Pre-completam anul de fabricatie
@@ -175,6 +187,14 @@ public class AddMasinaActivity extends AppCompatActivity {
                 // dataFabricatiei vine din variabila clasei, setata de DatePickerDialog
                 Masina masina = new Masina(esteElectrica, marca, anFabricatie, culoare, vitezaMaxima, dataFabricatiei);
 
+                // Cerinta 2 Lab 7: Salvam masina intr-un fisier intern (masini.txt)
+                // FileOutputStream cu MODE_APPEND = adaugam la sfarsitul fisierului, NU suprascriem
+                // Salvam DOAR la adaugare noua, NU la editare
+                // La editare, SecondActivity rescrie tot fisierul prin rescrieFisier()
+                if (!esteEditare) {
+                    salvareInFisier(masina);
+                }
+
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("masina", masina);
                 setResult(RESULT_OK, resultIntent);
@@ -183,9 +203,70 @@ public class AddMasinaActivity extends AppCompatActivity {
             }
         });
 
+        // Cerinta 4 Lab 7: Citim setarile din SharedPreferences si aplicam pe texte
+        // SharedPreferences = fisier XML persistent care pastreaza perechi cheie-valoare
+        // Daca utilizatorul a setat dimensiune/culoare in SettingsActivity, le aplicam aici
+        aplicaSetariDinPreferinte();
+
     }
 
+    // Cerinta 2 Lab 7: Metoda care salveaza un obiect Masina intr-un fisier intern
+    // Fisierul se numeste "masini.txt" si se afla in memoria interna a aplicatiei
+    // MODE_APPEND = daca fisierul exista, adaugam la sfarsit (nu suprascriem)
+    private void salvareInFisier(Masina masina) {
+        try {
+            // openFileOutput deschide/creeaza un fisier in directorul intern al aplicatiei
+            // Context.MODE_APPEND = adaugam la sfarsitul fisierului existent
+            FileOutputStream fos = openFileOutput("masini.txt", MODE_APPEND);
+            // Scriem toString()-ul masinii + newline ca separator intre obiecte
+            String linie = masina.toString() + "\n";
+            // getBytes() transforma String-ul in array de bytes pentru scriere
+            fos.write(linie.getBytes());
+            // Inchidem stream-ul pentru a elibera resursele
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    // Cerinta 4 Lab 7: Metoda care citeste SharedPreferences si aplica setarile
+    // pe toate TextView-urile din activitatea de adaugare
+    private void aplicaSetariDinPreferinte() {
+        // Deschidem fisierul SharedPreferences cu numele "setari_utilizator"
+        // MODE_PRIVATE = doar aplicatia noastra poate citi/scrie acest fisier
+        SharedPreferences prefs = getSharedPreferences("setari_utilizator", MODE_PRIVATE);
+
+        // Citim dimensiunea textului (valoare implicita 14 daca nu e setata)
+        float textSize = prefs.getFloat("text_size", 14f);
+        // Citim culoarea textului (valoare implicita alb daca nu e setata)
+        int textColor = prefs.getInt("text_color", Color.WHITE);
+
+        // Parcurgem TOATE view-urile din layout-ul principal
+        // Daca gasim un TextView (sau subclasa: EditText, Button, CheckBox),
+        // ii aplicam dimensiunea si culoarea setate de utilizator
+        ViewGroup root = findViewById(R.id.main);
+        aplicaSetariPeViewGroup(root, textSize, textColor);
+    }
+
+    // Metoda recursiva care parcurge toate view-urile dintr-un ViewGroup
+    // Si aplica dimensiunea + culoarea textului pe fiecare TextView gasit
+    private void aplicaSetariPeViewGroup(ViewGroup group, float textSize, int textColor) {
+        for (int i = 0; i < group.getChildCount(); i++) {
+            View child = group.getChildAt(i);
+            // Daca view-ul este un TextView (include si EditText, Button, CheckBox)
+            if (child instanceof TextView) {
+                // setTextSize cu COMPLEX_UNIT_SP = setam in SP (scale-independent pixels)
+                ((TextView) child).setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+                // setTextColor schimba culoarea textului
+                ((TextView) child).setTextColor(textColor);
+            }
+            // Daca view-ul este un ViewGroup (ConstraintLayout, LinearLayout etc.),
+            // intram recursiv in el pentru a gasi mai multe TextView-uri
+            if (child instanceof ViewGroup) {
+                aplicaSetariPeViewGroup((ViewGroup) child, textSize, textColor);
+            }
+        }
+    }
 
 
 }

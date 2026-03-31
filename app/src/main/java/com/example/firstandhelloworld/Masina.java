@@ -4,7 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 // Importam clasa Date din Java — reprezinta o data calendaristica (an, luna, zi, ora etc.)
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 
@@ -104,13 +107,52 @@ public class Masina implements Parcelable {
 
     // Cerinta 5: toString() — metoda apelata automat de ArrayAdapter cand afiseaza obiectul in ListView
     // Returneaza un String cu toate atributele, care apare ca text in fiecare rand din lista
+    // Formatul este parsabil de fromString() pentru a putea reciti din fisier
     @Override
     public String toString() {
+        // Formatam data in dd/MM/yyyy pentru a putea fi parsata inapoi de fromString()
+        String dataText = "N/A";
+        if (dataFabricatiei != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            dataText = sdf.format(dataFabricatiei);
+        }
         return marca + " | " + anFabricatie +
                 " | " + culoare +
                 " | Electric: " + (esteElectrica ? "Da" : "Nu") +
                 " | Viteza: " + vitezaMaxima +
-                " | Data: " + (dataFabricatiei != null ? dataFabricatiei.toString() : "N/A");
+                " | Data: " + dataText;
+    }
+
+    // Metoda statica care parseaza o linie din fisier si reconstruieste un obiect Masina
+    // Inversa lui toString() — citeste formatul "marca | an | culoare | Electric: Da/Nu | Viteza: x.x | Data: dd/MM/yyyy"
+    // Returneaza null daca linia nu poate fi parsata (format invalid)
+    public static Masina fromString(String linie) {
+        try {
+            // Spargem linia pe separatorul " | "
+            String[] parti = linie.split(" \\| ");
+            // parti[0] = marca
+            String marca = parti[0].trim();
+            // parti[1] = anFabricatie (numar)
+            int an = Integer.parseInt(parti[1].trim());
+            // parti[2] = culoare (enum)
+            CuloareMasina culoare = CuloareMasina.valueOf(parti[2].trim());
+            // parti[3] = "Electric: Da" sau "Electric: Nu"
+            boolean electric = parti[3].trim().equals("Electric: Da");
+            // parti[4] = "Viteza: 3.0" — extragem numarul dupa ": "
+            double viteza = Double.parseDouble(parti[4].replace("Viteza: ", "").trim());
+            // parti[5] = "Data: dd/MM/yyyy" sau "Data: N/A"
+            Date data = null;
+            String dataText = parti[5].replace("Data: ", "").trim();
+            if (!dataText.equals("N/A")) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                data = sdf.parse(dataText);
+            }
+            return new Masina(electric, marca, an, culoare, viteza, data);
+        } catch (Exception e) {
+            // Daca parsarea esueaza (format invalid), returnam null
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
