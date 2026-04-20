@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lab 9: Layout pentru WebViewActivity — contine un WebView care deschide
+     link-ul paginii web asociate imaginii selectate din ListView. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".WebViewActivity">
+
+    <!-- Lab 9: Bara de sus cu buton inapoi si titlul paginii -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+        android:background="#F5F5F5">
+
+        <!-- Buton de intoarcere la galerie -->
+        <Button
+            android:id="@+id/btnBackWebView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⬅ Înapoi" />
+
+        <!-- Titlu pagina — descrierea imaginii selectate -->
+        <TextView
+            android:id="@+id/tvTitluWeb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+    </LinearLayout>
+
+    <!-- Lab 9: WebView — componenta care afiseaza pagina web.
+         Deschide link-ul primit prin Intent de la GalerieActivity.
+         Necesita permisiunea INTERNET in AndroidManifest.xml. -->
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

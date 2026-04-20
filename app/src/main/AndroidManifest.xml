@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Lab 9: Permisiune INTERNET — necesara pentru descarcarea imaginilor
+         din internet cu Executors si pentru incarcarea paginilor web in WebView -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +18,14 @@
         <!-- Cerinta 4 Lab 7: Activitate de setari (dimensiune + culoare text) -->
         <activity
             android:name=".SettingsActivity"
+            android:exported="false" />
+        <!-- Lab 9: Activitate galerie — ListView cu imagini descarcate din internet -->
+        <activity
+            android:name=".GalerieActivity"
+            android:exported="false" />
+        <!-- Lab 9: Activitate WebView — deschide pagina web asociata imaginii selectate -->
+        <activity
+            android:name=".WebViewActivity"
             android:exported="false" />
         <!-- Activitate ROOM: baza de date SQLite cu cele 6 metode -->
         <activity

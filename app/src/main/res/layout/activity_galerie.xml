@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lab 9: Layout pentru activitatea Galerie — contine un ListView cu imagini
+     descarcate din internet si descrieri scurte. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".GalerieActivity">
+
+    <!-- Lab 9: Buton de intoarcere la activitatea anterioara -->
+    <Button
+        android:id="@+id/btnBackGalerie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⬅ Înapoi"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Lab 9: Titlu -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🖼️  Galerie Mașini"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Lab 9: ListView cu CustomAdapter — afiseaza imaginile descarcate + descriere.
+         La click pe un item, se deschide WebViewActivity cu link-ul aferent. -->
+    <ListView
+        android:id="@+id/lvImagini"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>
