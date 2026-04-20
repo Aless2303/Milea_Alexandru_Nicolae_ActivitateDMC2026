@@ -33,6 +33,8 @@ public class SettingsActivity extends AppCompatActivity {
             Color.YELLOW, Color.CYAN, Color.MAGENTA, 0xFFFF8800
     };
 
+
+
     // Variabilele care tin minte selectia curenta a utilizatorului
     private float dimensiuneText = 14f;  // dimensiune implicita 14sp
     private int culoareText = Color.WHITE; // culoare implicita alb

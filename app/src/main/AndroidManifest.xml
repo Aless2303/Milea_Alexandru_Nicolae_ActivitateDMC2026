@@ -15,6 +15,10 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />
+        <!-- Activitate ROOM: baza de date SQLite cu cele 6 metode -->
+        <activity
+            android:name=".DatabaseActivity"
+            android:exported="false" />
         <activity
             android:name=".AddMasinaActivity"
             android:exported="false" />

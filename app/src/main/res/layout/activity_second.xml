@@ -38,13 +38,24 @@
         app:layout_constraintTop_toBottomOf="@+id/button_to_masin"
         android:layout_marginTop="8dp" />
 
+    <!-- Buton care deschide activitatea de baza de date ROOM -->
+    <Button
+        android:id="@+id/button_database"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🗄️ Baza de Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_settings"
+        android:layout_marginTop="8dp" />
+
     <!-- Cerinta 5: ListView afiseaza lista de obiecte Masina folosind toString() -->
     <ListView
         android:id="@+id/listViewMasini"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/button_settings"
+        app:layout_constraintTop_toBottomOf="@+id/button_database"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

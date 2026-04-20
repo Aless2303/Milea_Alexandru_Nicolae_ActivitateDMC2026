@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Layout pentru activitatea de baza de date ROOM -->
+<!-- ScrollView permite scroll pe ecrane mici -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".DatabaseActivity">
+
+        <!-- Buton de intoarcere la activitatea anterioara -->
+        <Button
+            android:id="@+id/btnBackFromDb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⬅ Înapoi"
+            android:layout_marginBottom="8dp" />
+
+        <!-- ═══ TITLU ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🗄️  Baza de Date ROOM"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- ═══ SECTIUNE: ADAUGARE MASINA (Metoda 1 — Insert) ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="➕ Adaugă mașină în DB"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Camp pentru marca -->
+        <EditText
+            android:id="@+id/etMarcaDb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Marca (ex: BMW)"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <!-- Camp pentru anul de fabricatie -->
+        <EditText
+            android:id="@+id/etAnDb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="An fabricație (ex: 2024)"
+            android:inputType="number"
+            android:minHeight="48dp" />
+
+        <!-- Camp pentru viteza maxima -->
+        <EditText
+            android:id="@+id/etVitezaDb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Viteză maximă (ex: 250.5)"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp" />
+
+        <!-- Camp pentru culoare -->
+        <EditText
+            android:id="@+id/etCuloareDb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Culoare (ex: ROSU)"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <!-- Checkbox pentru electrica -->
+        <CheckBox
+            android:id="@+id/cbElectricaDb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Electrică"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Buton metoda 1: Inserare -->
+        <Button
+            android:id="@+id/btnInsert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Inserează în DB"
+            android:layout_marginBottom="16dp" />
+
+        <!-- ═══ SECTIUNE: AFISARE TOATE (Metoda 2 — Select All) ═══ -->
+        <Button
+            android:id="@+id/btnSelectAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Afișează toate mașinile"
+            android:layout_marginBottom="8dp" />
+
+        <!-- ═══ SECTIUNE: CAUTARE DUPA MARCA (Metoda 3 — Select by String) ═══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etCautaMarca"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Marca de căutat"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <Button
+                android:id="@+id/btnSelectByMarca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3. Caută" />
+        </LinearLayout>
+
+        <!-- ═══ SECTIUNE: INTERVAL AN (Metoda 4 — Select by int interval) ═══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etAnMin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="An min"
+                android:inputType="number"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/etAnMax"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="An max"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:layout_marginStart="8dp" />
+
+            <Button
+                android:id="@+id/btnSelectByInterval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4. Interval" />
+        </LinearLayout>
+
+        <!-- ═══ SECTIUNE: STERGERE DUPA VITEZA (Metoda 5 — Delete by numeric) ═══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etVitezaPrag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Viteză prag"
+                android:inputType="numberDecimal"
+                android:minHeight="48dp" />
+
+            <Button
+                android:id="@+id/btnDeleteByViteza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5. Șterge > prag" />
+        </LinearLayout>
+
+        <!-- ═══ SECTIUNE: INCREMENT AN DUPA LITERA (Metoda 6 — Update) ═══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/etLitera"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Literă (ex: B)"
+                android:inputType="text"
+                android:maxLength="1"
+                android:minHeight="48dp" />
+
+            <Button
+                android:id="@+id/btnIncrementAn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6. An +1 pt literă" />
+        </LinearLayout>
+
+        <!-- ═══ ListView — afiseaza rezultatele metodelor 2 si 4 ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📋 Rezultate:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <ListView
+            android:id="@+id/lvMasiniDb"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+</ScrollView>

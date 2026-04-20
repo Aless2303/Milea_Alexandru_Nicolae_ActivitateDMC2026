@@ -179,6 +179,16 @@ public class SecondActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Lab 8: Buton care deschide DatabaseActivity (baza de date ROOM)
+        Button buttonDatabase = findViewById(R.id.button_database);
+        buttonDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SecondActivity.this, DatabaseActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // Cerinta 3 Lab 7: Metoda care salveaza un obiect Masina in fisierul de FAVORITE
