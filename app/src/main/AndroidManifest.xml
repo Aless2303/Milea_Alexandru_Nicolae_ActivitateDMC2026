@@ -46,6 +46,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Lab 10: Activitate pentru prognoza meteo AccuWeather (City Search + Forecast + AsyncTask) -->
+        <activity
+            android:name=".WeatherActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"></activity>

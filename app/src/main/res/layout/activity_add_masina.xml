@@ -158,82 +158,84 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- ═══ CARD 3: PROPULSIE + CULOARE ═══ -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cardOptions"
-                android:layout_width="0dp"
+
+        <!-- ═══ CARD 4: RATING VITEZĂ ═══ -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardOptions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/card_glow"
+            android:elevation="8dp"
+            android:padding="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardAn">
+
+            <TextView
+                android:id="@+id/esteElectrica"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/card_glow"
-                android:padding="18dp"
-                android:elevation="8dp"
+                android:letterSpacing="0.3"
+                android:text="⚡  PROPULSIE"
+                android:textColor="@color/neon_cyan"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/checkboxElectrica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:buttonTint="@color/neon_cyan"
+                android:text="  Mașină 100% Electrică  ⚡"
+                android:textColor="@color/text_light"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/esteElectrica" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="14dp"
+                android:background="@color/divider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardAn">
+                app:layout_constraintTop_toBottomOf="@+id/checkboxElectrica" />
 
-                <TextView
-                    android:id="@+id/esteElectrica"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="⚡  PROPULSIE"
-                    android:textColor="@color/neon_cyan"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.3"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/labelCuloare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:letterSpacing="0.3"
+                android:text="🎨  CULOARE CAROSERIE"
+                android:textColor="@color/neon_cyan"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider1" />
 
-                <CheckBox
-                    android:id="@+id/checkboxElectrica"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="  Mașină 100% Electrică  ⚡"
-                    android:textColor="@color/text_light"
-                    android:textSize="15sp"
-                    android:buttonTint="@color/neon_cyan"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/esteElectrica" />
+            <Spinner
+                android:id="@+id/culoareMasina"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/spinner_neon"
+                android:contentDescription="Selectati culoarea masinii"
+                android:minHeight="48dp"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/labelCuloare" />
 
-                <View
-                    android:id="@+id/divider1"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="14dp"
-                    android:background="@color/divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkboxElectrica" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/labelCuloare"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="🎨  CULOARE CAROSERIE"
-                    android:textColor="@color/neon_cyan"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.3"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider1" />
-
-                <Spinner
-                    android:id="@+id/culoareMasina"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:minHeight="48dp"
-                    android:background="@drawable/spinner_neon"
-                    android:padding="12dp"
-                    android:contentDescription="Selectati culoarea masinii"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/labelCuloare" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- ═══ CARD 4: RATING VITEZĂ ═══ -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardRating"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

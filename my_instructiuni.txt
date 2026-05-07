@@ -1,0 +1,2542 @@
+====================================================================
+GHID COMPLET ANDROID - FIECARE CERINTA, PAS CU PAS
+====================================================================
+Structura: fiecare cerinta din fiecare laborator, exact cum este
+formulata, urmata de instructiuni detaliate de implementare.
+Cauta direct cerinta ta si executa pasii.
+====================================================================
+
+
+====================================================================
+          LABORATOR 2
+====================================================================
+
+
+----------------------------------------------------------------
+LAB 2, CERINTA 1
+CERINTA: "Creati o noua aplicatie in Android Studio cu o activitate
+Empty Views, in java, cu API 23 / API 24."
+----------------------------------------------------------------
+
+PAS 1: Deschizi Android Studio
+PAS 2: File -> New -> New Project
+PAS 3: In fereastra de selectie template:
+   - Selectezi "Phone and Tablet" (stanga)
+   - Selectezi "Empty Views Activity" (dreptunghi alb, simplu)
+   - Apesi "Next"
+PAS 4: Completezi campurile:
+   - Name: NumeProiect (ex: AppMAN sau AppAM, fara spatii)
+   - Package name: com.example.numeproiect (se completeaza auto)
+   - Save location: un folder de pe disc
+   - Language: Java   <-- OBLIGATORIU Java, nu Kotlin
+   - Minimum SDK: API 23  <-- NU lasa API 36, schimba la 23
+   - Build configuration language: Kotlin DSL (build.gradle.kts)
+PAS 5: Apesi Finish. Asteapta Gradle sync (bara de jos)
+
+Ce se creeaza:
+   app/src/main/java/.../MainActivity.java
+   app/src/main/res/layout/activity_main.xml
+   app/src/main/AndroidManifest.xml
+   app/build.gradle.kts
+   gradle/libs.versions.toml
+
+
+----------------------------------------------------------------
+LAB 2, CERINTA 2
+CERINTA: "Rulati aplicatia pe emulator sau pe dispozitivul mobil."
+----------------------------------------------------------------
+
+PE EMULATOR:
+PAS 1: Sus dreapta in Android Studio, langa butonul Run (triunghi verde),
+       dai click pe "Device Manager" (iconita telefon)
+PAS 2: Daca nu ai emulator creat: "+ Create Virtual Device"
+       -> selectezi un telefon (ex: Pixel 6) -> Next
+       -> selectezi imaginea sistemului (ex: API 34 sau orice recomandat)
+       -> Next -> Finish
+PAS 3: Selectezi emulatorul din lista drop-down (sus dreapta, langa butonul Run)
+PAS 4: Apesi butonul Run (triunghi verde)
+PAS 5: Asteapta sa porneasca emulatorul si sa se instaleze aplicatia
+
+PE DISPOZITIV REAL:
+PAS 1: Pe telefon: Settings -> About Phone -> apesi de 7 ori pe "Build Number"
+       (activeaza Developer Options)
+PAS 2: Settings -> Developer Options -> USB Debugging -> ON
+PAS 3: Conectezi telefonul cu cablu USB la calculator
+PAS 4: Selectezi telefonul din lista drop-down din Android Studio
+PAS 5: Apesi Run
+
+
+----------------------------------------------------------------
+LAB 2, CERINTA 3
+CERINTA: "Identificati toate fisierele din cadrul proiectului."
+----------------------------------------------------------------
+
+In Android Studio, stanga, ai panoul "Project". Asigura-te ca
+sus in el scrie "Android" (nu "Project"). Structura:
+
+app/
+  manifests/
+    AndroidManifest.xml     <- declaratii activitati, permisiuni
+  java/
+    com.example.numeproiect/
+      MainActivity.java     <- codul Java al activitatii
+  res/
+    drawable/               <- imagini, iconite
+    layout/
+      activity_main.xml     <- layoutul activitatii (UI)
+    mipmap/                 <- iconite aplicatie in diferite rezolutii
+    values/
+      colors.xml            <- culori definite
+      strings.xml           <- texte (resurse text)
+      themes.xml            <- tema vizuala a aplicatiei
+
+Gradle Scripts/
+  build.gradle.kts (Project)  <- config globala
+  build.gradle.kts (Module)   <- config aplicatie, dependinte
+  libs.versions.toml           <- versiuni librarii
+
+
+----------------------------------------------------------------
+LAB 2, CERINTA 4
+CERINTA: "Rulati aplicatia in modul debug, punand un breakpoint in
+metoda onCreate(). Rulati pas cu pas."
+----------------------------------------------------------------
+
+PAS 1: Deschizi MainActivity.java (dublu click pe el)
+PAS 2: Gasesti metoda onCreate() --- arata asa:
+        protected void onCreate(Bundle savedInstanceState) {
+PAS 3: Dai click in bara GRI din stanga liniei
+       "super.onCreate(savedInstanceState);"
+       Apare un CERC ROSU = breakpoint
+PAS 4: In loc de butonul Run (triunghi verde), apesi butonul DEBUG
+       (iconita de bug/gandac, langa Run)
+PAS 5: Emulatorul porneste si aplicatia se OPRESTE pe linia cu breakpoint
+       (linia e evidentiata in albastru)
+PAS 6: In panoul Debug (jos):
+   - F8 = Step Over: executa linia curenta, trece la urmatoarea
+   - F7 = Step Into: intra in metoda apelata
+   - F9 = Resume: continua pana la urmatorul breakpoint
+   - In tab-ul "Variables" (jos stanga) vezi valorile variabilelor
+
+
+----------------------------------------------------------------
+LAB 2, CERINTA 5
+CERINTA: "In fisierul activity_main.xml, adaugati un buton si
+stabiliti constrangerile, astfel incat sa fie deasupra
+TextView-ului existent deja. Rulati iar aplicatia."
+----------------------------------------------------------------
+
+PAS 1: Deschizi activity_main.xml (dublu click)
+PAS 2: Sus dreapta in editor, ai butoanele "Code" | "Split" | "Design"
+       Selectezi "Code" ca sa editezi XML direct
+
+PAS 3: In XML gasesti TextView-ul existent. Arata cam asa:
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+PAS 4: Adaugi un Button INAINTE de TextView (sau dupa, nu conteaza ordinea
+       in XML pentru afisare, conteaza constrangerile):
+------------------------------------------------------------
+<Button
+    android:id="@+id/btnMeu"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Apasa"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="100dp" />
+------------------------------------------------------------
+
+PAS 5: Modifica TextView-ul sa fie SUB Button (constrangere sus la
+       josul butonului):
+------------------------------------------------------------
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Hello World!"
+    app:layout_constraintTop_toBottomOf="@id/btnMeu"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="16dp" />
+------------------------------------------------------------
+
+EXPLICATII CONSTRANGERI:
+  app:layout_constraintTop_toTopOf="parent"       = sus al meu la sus al parintelui
+  app:layout_constraintTop_toBottomOf="@id/X"     = sus al meu la jos al lui X
+  app:layout_constraintStart_toStartOf="parent"   = stanga la marginea stanga
+  app:layout_constraintEnd_toEndOf="parent"       = dreapta la marginea dreapta
+  (start+end centreaza orizontal)
+
+PAS 6: Apesi Run si verifici ca butonul apare deasupra textului
+
+
+----------------------------------------------------------------
+LAB 2, CERINTA 6
+CERINTA: "In fisierul activity_main.xml, adaugati un EditText
+(Plain Text) si stabiliti constrangerile, astfel incat sa fie
+pozitionat sub TextView-ul existent."
+----------------------------------------------------------------
+
+PAS 1: In activity_main.xml, dupa TextView, adaugi:
+------------------------------------------------------------
+<EditText
+    android:id="@+id/etText"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:hint="Introdu text..."
+    android:inputType="text"
+    app:layout_constraintTop_toBottomOf="@id/textView"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp" />
+------------------------------------------------------------
+
+Explicatii:
+  android:layout_width="0dp" = se intinde cat constrangerile (match constraints)
+  android:hint = textul gri afisat cand campul e gol
+  android:inputType="text" = tip tastatura (text normal)
+
+
+----------------------------------------------------------------
+LAB 2, CERINTA 7
+CERINTA: "Folositi fisierul de resurse pentru a seta textele
+afisate in cele trei view-uri (controale). Rulati iar aplicatia."
+----------------------------------------------------------------
+
+Ideea: in loc sa pui textul direct in XML (android:text="Apasa"),
+il definesti in strings.xml si il referentiezi.
+
+PAS 1: Deschizi res -> values -> strings.xml
+PAS 2: Adaugi intrari pentru fiecare text:
+------------------------------------------------------------
+<resources>
+    <string name="app_name">NumeApp</string>
+    <string name="btn_apasa">Apasati</string>
+    <string name="tv_salut">Buna ziua!</string>
+    <string name="et_hint">Introduceti textul...</string>
+</resources>
+------------------------------------------------------------
+
+PAS 3: In activity_main.xml, inlocuiesti textele hardcodate:
+------------------------------------------------------------
+<!-- IN LOC DE android:text="Apasa" -->
+android:text="@string/btn_apasa"
+
+<!-- IN LOC DE android:text="Hello World!" -->
+android:text="@string/tv_salut"
+
+<!-- IN LOC DE android:hint="Introdu text..." -->
+android:hint="@string/et_hint"
+------------------------------------------------------------
+
+PAS 4: Rulezi aplicatia - arata la fel, dar acum textele sunt in resurse
+
+
+----------------------------------------------------------------
+LAB 2, CERINTA 8 (OPTIONAL)
+CERINTA: "Cand apasam pe buton textul din View-ul de tip textView
+sa se modifice cu un alt text la alegere."
+----------------------------------------------------------------
+
+In MainActivity.java, in onCreate(), dupa setContentView():
+------------------------------------------------------------
+Button btn = findViewById(R.id.btnMeu);
+TextView tv = findViewById(R.id.textView);
+
+btn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        tv.setText("Text nou dupa click!");
+    }
+});
+------------------------------------------------------------
+
+Importuri necesare in capul fisierului:
+  import android.widget.Button;
+  import android.widget.TextView;
+  import android.view.View;
+
+
+----------------------------------------------------------------
+LAB 2, CERINTA 9
+CERINTA: "Internationalizarea aplicatiei: adaugati cel putin alte
+doua limbi straine pentru textele utilizate. Schimbati limba
+emulatorului sa prezentati trecerea intre limbi."
+----------------------------------------------------------------
+
+PAS 1: Te asiguri ca res/values/strings.xml are TOATE textele definite
+       (acesta e fisierul default - romana sau engleza)
+
+PAS 2: Creezi folder pentru limba 1 (ex: franceza):
+   - Click dreapta pe folderul "res" din panoul Project
+   - New -> Android Resource Directory
+   - In "Resource type" alegi "values"
+   - In "Available qualifiers" gasesti "Locale"
+   - Dai click pe ">>" sa il muti in "Chosen qualifiers"
+   - In "Language" selectezi "fr: French"
+   - OK
+   - Se creeaza folderul res/values-fr/
+
+PAS 3: In res/values-fr/ creezi strings.xml:
+   - Click dreapta pe values-fr -> New -> Values Resource File
+   - Name: strings -> OK
+   Continut:
+------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="btn_apasa">Appuyer</string>
+    <string name="tv_salut">Bonjour!</string>
+    <string name="et_hint">Entrez le texte...</string>
+</resources>
+------------------------------------------------------------
+   ATENTIE: cheile (name="...") trebuie sa fie IDENTICE cu cele din
+   fisierul default. Doar valorile se traduc.
+
+PAS 4: Repeti pentru limba 2 (ex: spaniola - "es"):
+   Se creeaza res/values-es/strings.xml
+------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="btn_apasa">Pulsar</string>
+    <string name="tv_salut">¡Hola!</string>
+    <string name="et_hint">Introduce el texto...</string>
+</resources>
+------------------------------------------------------------
+
+PAS 5: Schimbi limba pe emulator:
+   - Pe emulator: Settings (iconita rotita)
+   - System -> Language & Input -> Languages
+   - "+ Add a language"
+   - Selectezi French sau Spanish
+   - Il tragi sus (drag) sa devina limba principala
+   - Repornesti aplicatia -> textele apar in noua limba
+
+
+====================================================================
+          LABORATOR 3
+====================================================================
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 1
+CERINTA: "Realizati o activitate noua pe care sa o setati ca
+activitate implicita."
+----------------------------------------------------------------
+
+Asta inseamna: creezi o activitate noua si o faci LAUNCHER (se
+deschide prima cand pornesti aplicatia).
+
+PAS 1: Creezi activitatea noua:
+   - Stanga, extindi: app -> java -> com.example.numeproiect
+   - Click dreapta pe pachetul (com.example.numeproiect)
+   - New -> Activity -> Empty Views Activity
+   - Activity Name: SecondActivity
+   - Finish
+   (Se creeaza SecondActivity.java + activity_second.xml + se
+   adauga automat in Manifest)
+
+PAS 2: Deschizi app/manifests/AndroidManifest.xml
+
+PAS 3: Gasesti blocul pentru MainActivity (are intent-filter):
+------------------------------------------------------------
+<activity
+    android:name=".MainActivity"
+    android:exported="true">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+------------------------------------------------------------
+
+PAS 4: Stergi <intent-filter>...</intent-filter> din MainActivity
+       si il muti la SecondActivity. Rezultat:
+------------------------------------------------------------
+<activity
+    android:name=".MainActivity"
+    android:exported="false" />
+
+<activity
+    android:name=".SecondActivity"
+    android:exported="true">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+------------------------------------------------------------
+
+PAS 5: Rulezi aplicatia -> acum se deschide SecondActivity prima
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 2
+CERINTA: "Implementati metodele pentru prezentarea ciclului de
+viata al unei activitati: onStart(), onResume(), onPause(),
+onStop()."
+----------------------------------------------------------------
+
+In SecondActivity.java (sau in orice activitate ceruta), sub
+metoda onCreate(), adaugi metodele:
+
+------------------------------------------------------------
+@Override
+protected void onStart() {
+    super.onStart();   // OBLIGATORIU - apeleaza implementarea parintelui
+    // codul tau
+}
+
+@Override
+protected void onResume() {
+    super.onResume();
+    // codul tau
+}
+
+@Override
+protected void onPause() {
+    super.onPause();
+    // codul tau
+}
+
+@Override
+protected void onStop() {
+    super.onStop();
+    // codul tau
+}
+
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    // codul tau
+}
+------------------------------------------------------------
+
+Shortcut in Android Studio: in corpul clasei, apesi Ctrl+O
+(Override Methods), selectezi metodele dorite, OK.
+Android Studio genereaza automat codul cu super.metoda().
+
+ORDINEA DE APELARE:
+  Pornire aplicatie: onCreate -> onStart -> onResume
+  Mergi in background: onPause -> onStop
+  Revii in aplicatie: onRestart -> onStart -> onResume
+  Inchizi aplicatia: onPause -> onStop -> onDestroy
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 3
+CERINTA: "In cadrul fiecarei metode salvati un log de tipul error,
+warning, debug, info: Log.e(), Log.w(), Log.d(), Log.i(), Log.v()."
+----------------------------------------------------------------
+
+PAS 1: Import la inceputul fisierului Java:
+   import android.util.Log;
+
+PAS 2: Definesti un TAG (constanta pentru identificare in Logcat):
+   private static final String TAG = "SecondActivity";
+   (o pui ca variabila de clasa, inainte de onCreate)
+
+PAS 3: Adaugi Log in fiecare metoda:
+------------------------------------------------------------
+private static final String TAG = "SecondActivity";
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_second);
+    Log.d(TAG, "onCreate a fost apelat");
+}
+
+@Override
+protected void onStart() {
+    super.onStart();
+    Log.e(TAG, "onStart a fost apelat");    // log rosu (Error)
+}
+
+@Override
+protected void onResume() {
+    super.onResume();
+    Log.w(TAG, "onResume a fost apelat");   // log portocaliu (Warning)
+}
+
+@Override
+protected void onPause() {
+    super.onPause();
+    Log.d(TAG, "onPause a fost apelat");    // log albastru (Debug)
+}
+
+@Override
+protected void onStop() {
+    super.onStop();
+    Log.i(TAG, "onStop a fost apelat");     // log verde (Info)
+}
+
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    Log.v(TAG, "onDestroy a fost apelat");  // log gri (Verbose)
+}
+------------------------------------------------------------
+
+Tipuri de log:
+  Log.e(TAG, "mesaj") = Error   (rosu)
+  Log.w(TAG, "mesaj") = Warning (portocaliu/galben)
+  Log.d(TAG, "mesaj") = Debug   (albastru)
+  Log.i(TAG, "mesaj") = Info    (verde)
+  Log.v(TAG, "mesaj") = Verbose (gri)
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 4
+CERINTA: "Filtrati si cautati logurile salvate in tab-ul Logcat."
+----------------------------------------------------------------
+
+PAS 1: In Android Studio, jos, dai click pe tab-ul "Logcat"
+PAS 2: Rulezi aplicatia in modul normal (Run, nu Debug)
+PAS 3: In Logcat, sus, selectezi procesul aplicatiei tale din
+       dropdown (ex: com.example.numeproiect)
+PAS 4: In bara de search (sus in Logcat) tastezi TAG-ul tau:
+       "SecondActivity" -> filtreaza doar logurile cu acel TAG
+PAS 5: Poti filtra si dupa nivel: in dropdown alaturat alegi
+       Error / Warning / Info / Debug / Verbose
+
+Testare:
+  - Deschizi aplicatia -> apare onCreate, onStart, onResume
+  - Mergi la Home -> apare onPause, onStop
+  - Revii la aplicatie -> apare onRestart, onStart, onResume
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 5
+CERINTA: "Adaugati o noua activitate in cadrul proiectului.
+Setati din AndroidManifest ca noua activitate sa fie lansata
+la deschiderea aplicatiei."
+----------------------------------------------------------------
+
+Asa ca Lab 3, Cerinta 1 de mai sus.
+Repet pe scurt:
+
+PAS 1: Click dreapta pe pachet -> New -> Activity -> Empty Views Activity
+PAS 2: Numesti activitatea (ex: SecondActivity)
+PAS 3: In AndroidManifest.xml: muti <intent-filter> MAIN/LAUNCHER la noua activitate
+------------------------------------------------------------
+<!-- Activitatea veche - fara launcher -->
+<activity android:name=".MainActivity" android:exported="false" />
+
+<!-- Activitatea noua - devine LAUNCHER -->
+<activity android:name=".SecondActivity" android:exported="true">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 6
+CERINTA: "Adaugati o a treia activitate in cadrul proiectului."
+----------------------------------------------------------------
+
+La fel ca cerinta 5, adaugi inca o activitate.
+
+PAS 1: Click dreapta pe pachet -> New -> Activity -> Empty Views Activity
+PAS 2: Activity Name: ThirdActivity -> Finish
+
+Se adauga automat in Manifest:
+------------------------------------------------------------
+<activity android:name=".ThirdActivity" android:exported="false" />
+------------------------------------------------------------
+
+Nu modifica LAUNCHER - ramane SecondActivity.
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 7
+CERINTA: "In cea de a doua activitate adaugati un Button. La
+apasarea butonului respectiv deschideti cea de a treia activitate
+printr-un Intent."
+----------------------------------------------------------------
+
+PAS 1: In activity_second.xml adaugi un Button:
+------------------------------------------------------------
+<Button
+    android:id="@+id/btnMergeThird"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Mergi la activitatea 3"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="32dp" />
+------------------------------------------------------------
+
+PAS 2: In SecondActivity.java, in onCreate(), sub setContentView():
+------------------------------------------------------------
+Button btnMerge = findViewById(R.id.btnMergeThird);
+
+btnMerge.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        // Intent = intentie de a deschide ThirdActivity
+        Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+        //                          ^activitatea curenta  ^destinatia
+        startActivity(intent);
+    }
+});
+------------------------------------------------------------
+
+Import necesar: import android.content.Intent;
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 8
+CERINTA: "La deschiderea activitatii trimiteti un mesaj si doua
+valori de tip intreg catre activitatea deschisa printr-un Bundle."
+----------------------------------------------------------------
+
+In SecondActivity.java, in onClick (unde creezi Intent-ul):
+------------------------------------------------------------
+btnMerge.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+
+        // Varianta BUNDLE:
+        Bundle bundle = new Bundle();
+        bundle.putString("mesaj", "Salut din SecondActivity!");
+        bundle.putInt("valoare1", 23);
+        bundle.putInt("valoare2", 45);
+        intent.putExtras(bundle);
+
+        // SAU direct pe intent (fara Bundle explicit):
+        // intent.putExtra("mesaj", "Salut!");
+        // intent.putExtra("valoare1", 23);
+        // intent.putExtra("valoare2", 45);
+
+        startActivity(intent);
+        // SAU daca vrei sa primesti date INAPOI: launcher.launch(intent)
+        // (vezi Cerinta 10-11)
+    }
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 9
+CERINTA: "In activitatea nou deschisa preluati informatiile trimise
+din activitatea precedenta si le afisati intr-un Toast."
+----------------------------------------------------------------
+
+In ThirdActivity.java, in onCreate():
+------------------------------------------------------------
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_third);
+
+    // Preiei Bundle-ul primit
+    Bundle bundle = getIntent().getExtras();
+
+    if (bundle != null) {
+        String mesaj = bundle.getString("mesaj");
+        int valoare1 = bundle.getInt("valoare1");
+        int valoare2 = bundle.getInt("valoare2");
+
+        // Afisezi intr-un Toast
+        Toast.makeText(
+            this,
+            mesaj + " | v1=" + valoare1 + " v2=" + valoare2,
+            Toast.LENGTH_LONG
+        ).show();
+    }
+}
+------------------------------------------------------------
+
+SAU varianta fara Bundle explicit:
+------------------------------------------------------------
+String mesaj = getIntent().getStringExtra("mesaj");
+int valoare1 = getIntent().getIntExtra("valoare1", 0);
+int valoare2 = getIntent().getIntExtra("valoare2", 0);
+------------------------------------------------------------
+
+Import: import android.widget.Toast;
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 10
+CERINTA: "In activitatea nou deschisa trebuie sa aveti un buton
+care sa trimita catre activitatea precedenta un alt mesaj si suma
+celor doua valori primite."
+----------------------------------------------------------------
+
+ATENTIE: Pentru ca SecondActivity sa primeasca date inapoi, trebuie
+sa folosesti ActivityResultLauncher in loc de startActivity.
+
+PASUL A: In SecondActivity.java, INAINTE de onCreate(), declari launcher:
+------------------------------------------------------------
+// Declarat ca variabila de clasa (INAINTE de onCreate)
+private final ActivityResultLauncher<Intent> thirdLauncher =
+    registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            // Ajungi aici cand ThirdActivity s-a inchis
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                String mesajInapoi = result.getData().getStringExtra("mesajInapoi");
+                int suma = result.getData().getIntExtra("suma", 0);
+                // Afisezi (pentru Cerinta 11)
+                Toast.makeText(this,
+                    mesajInapoi + " | Suma: " + suma,
+                    Toast.LENGTH_LONG).show();
+            }
+        }
+    );
+------------------------------------------------------------
+
+PASUL B: In onClick, deschizi ThirdActivity cu launcher (nu startActivity):
+------------------------------------------------------------
+btnMerge.setOnClickListener(v -> {
+    Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+    intent.putExtra("mesaj", "Salut din SecondActivity!");
+    intent.putExtra("valoare1", 23);
+    intent.putExtra("valoare2", 45);
+    thirdLauncher.launch(intent);   // <-- launcher.launch, nu startActivity
+});
+------------------------------------------------------------
+
+PASUL C: In ThirdActivity.java, preiei datele, calculezi suma,
+         ai un buton care trimite inapoi:
+------------------------------------------------------------
+private int valoare1, valoare2, suma;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_third);
+
+    // Preiei datele
+    String mesaj = getIntent().getStringExtra("mesaj");
+    valoare1 = getIntent().getIntExtra("valoare1", 0);
+    valoare2 = getIntent().getIntExtra("valoare2", 0);
+    suma = valoare1 + valoare2;
+
+    // Afisezi (Cerinta 9)
+    Toast.makeText(this, mesaj, Toast.LENGTH_SHORT).show();
+
+    // Buton care trimite inapoi (Cerinta 10)
+    Button btnInapoi = findViewById(R.id.btnInapoi);
+    btnInapoi.setOnClickListener(v -> {
+        Intent intentRaspuns = new Intent();
+        intentRaspuns.putExtra("mesajInapoi", "Salut inapoi din ThirdActivity!");
+        intentRaspuns.putExtra("suma", suma);
+        setResult(RESULT_OK, intentRaspuns);  // seteaza rezultatul
+        finish();  // inchide ThirdActivity, control revine la SecondActivity
+    });
+}
+------------------------------------------------------------
+
+Adaugi butonul in activity_third.xml:
+------------------------------------------------------------
+<Button
+    android:id="@+id/btnInapoi"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Trimite inapoi"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="32dp" />
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 3, CERINTA 11
+CERINTA: "In activitatea initiala vor fi afisate printr-un Toast
+mesajul primit si valoarea calculata."
+----------------------------------------------------------------
+
+Deja rezolvata in Cerinta 10, PASUL A: in callback-ul launcher-ului
+din SecondActivity ai:
+------------------------------------------------------------
+Toast.makeText(this,
+    mesajInapoi + " | Suma: " + suma,
+    Toast.LENGTH_LONG).show();
+------------------------------------------------------------
+
+Asta se executa automat cand ThirdActivity apeleaza finish().
+
+
+====================================================================
+          LABORATOR 4
+====================================================================
+
+
+----------------------------------------------------------------
+LAB 4, CERINTA 1
+CERINTA: "Continuati proiectul din laboratorul precedent sau
+creati unul nou. Realizati o activitate noua pe care sa o setati
+ca activitate implicita."
+----------------------------------------------------------------
+
+Identic cu Lab 3, Cerinta 1 si 5.
+Creezi o activitate noua si o faci LAUNCHER in AndroidManifest.xml.
+
+
+----------------------------------------------------------------
+LAB 4, CERINTA 2
+CERINTA: "Creati o clasa pentru un obiect din realitate care
+contine initialele numelui. Clasa trebuie sa contina minim cinci
+atribute de tipuri diferite: string, boolean, int, enum."
+----------------------------------------------------------------
+
+EXEMPLU: initiale MAN -> clasa Masina
+
+PAS 1: Creezi fisierul enum (ex: CuloareMasina.java):
+   Click dreapta pe pachet -> New -> Java Class -> selectezi Enum
+   Name: CuloareMasina
+------------------------------------------------------------
+public enum CuloareMasina {
+    ROSU, ALBASTRU, NEGRU, ALB, GRI
+}
+------------------------------------------------------------
+
+PAS 2: Creezi clasa (ex: Masina.java):
+   Click dreapta pe pachet -> New -> Java Class
+   Name: Masina
+------------------------------------------------------------
+public class Masina {
+    // 5 atribute de tipuri diferite
+    private String marca;            // String
+    private boolean esteElectrica;   // boolean
+    private int anFabricatie;        // int
+    private CuloareMasina culoare;   // enum
+    private double vitezaMaxima;     // double
+
+    // Constructor cu toti parametrii
+    public Masina(String marca, boolean esteElectrica, int anFabricatie,
+                  CuloareMasina culoare, double vitezaMaxima) {
+        this.marca = marca;
+        this.esteElectrica = esteElectrica;
+        this.anFabricatie = anFabricatie;
+        this.culoare = culoare;
+        this.vitezaMaxima = vitezaMaxima;
+    }
+
+    // Getteri (Alt+Insert -> Getters -> selectezi toate -> OK)
+    public String getMarca() { return marca; }
+    public boolean isEsteElectrica() { return esteElectrica; }
+    public int getAnFabricatie() { return anFabricatie; }
+    public CuloareMasina getCuloare() { return culoare; }
+    public double getVitezaMaxima() { return vitezaMaxima; }
+
+    // Setteri
+    public void setMarca(String marca) { this.marca = marca; }
+    public void setEsteElectrica(boolean e) { this.esteElectrica = e; }
+    public void setAnFabricatie(int an) { this.anFabricatie = an; }
+    public void setCuloare(CuloareMasina c) { this.culoare = c; }
+    public void setVitezaMaxima(double v) { this.vitezaMaxima = v; }
+
+    // toString - afisat in ListView
+    @Override
+    public String toString() {
+        return marca + " | " + anFabricatie + " | " +
+               culoare.name() + " | " +
+               (esteElectrica ? "Electric" : "Combustie") +
+               " | " + vitezaMaxima + " km/h";
+    }
+}
+------------------------------------------------------------
+
+SHORTCUT pentru Getteri/Setteri:
+  In clasa, dupa atribute: Alt+Insert -> Getters and Setters ->
+  Ctrl+A (selectezi toate) -> OK
+
+
+----------------------------------------------------------------
+LAB 4, CERINTA 3
+CERINTA: "Adaugati o noua activitate pentru preluarea de date.
+Trebuie sa contina: TextView, EditText, Button, CheckBox,
+RadioButton, Spinner, RatingBar, Switch, ToggleButton.
+Aceasta activitate este deschisa printr-un buton din prima
+activitate printr-un Intent dependent."
+----------------------------------------------------------------
+
+PAS 1: Creezi AddMasinaActivity:
+   Click dreapta pe pachet -> New -> Activity -> Empty Views Activity
+   Name: AddMasinaActivity
+
+PAS 2: In activity_add_masina.xml adaugi toate view-urile:
+------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvTitlu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adauga masina"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/etMarca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Marca"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etAn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="An fabricatie"
+        android:inputType="number" />
+
+    <CheckBox
+        android:id="@+id/cbElectric"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Este electrica?" />
+
+    <!-- Spinner pentru enum CuloareMasina -->
+    <Spinner
+        android:id="@+id/spinnerCuloare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5" />
+
+    <Switch
+        android:id="@+id/switchCeva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Optiune" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="OFF"
+        android:textOn="ON" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioOpt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Optiune 1" />
+
+        <RadioButton
+            android:id="@+id/radioOpt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Optiune 2" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSalveaza"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Salveaza" />
+
+  </LinearLayout>
+</ScrollView>
+------------------------------------------------------------
+
+PAS 3: In AddMasinaActivity.java configurezi Spinner-ul cu valorile enum:
+------------------------------------------------------------
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_add_masina);
+
+    Spinner spinnerCuloare = findViewById(R.id.spinnerCuloare);
+
+    // Luam toate valorile din enum ca array de String
+    CuloareMasina[] culori = CuloareMasina.values();
+    String[] numeculori = new String[culori.length];
+    for (int i = 0; i < culori.length; i++) {
+        numeculori[i] = culori[i].name(); // ex: "ROSU", "ALBASTRU"...
+    }
+
+    ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
+        this,
+        android.R.layout.simple_spinner_item,
+        numeculori
+    );
+    spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinnerCuloare.setAdapter(spinnerAdapter);
+}
+------------------------------------------------------------
+
+PAS 4: In SecondActivity (activitatea care deschide formularul),
+       adaugi un buton "Adauga":
+
+In activity_second.xml:
+------------------------------------------------------------
+<Button
+    android:id="@+id/btnAdauga"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Adauga masina"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="16dp" />
+------------------------------------------------------------
+
+In SecondActivity.java, butonul deschide AddMasinaActivity CU launcher
+(pentru a primi masina inapoi - Cerinta 4):
+------------------------------------------------------------
+private final ActivityResultLauncher<Intent> addMasinaLauncher =
+    registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Masina masina = result.getData().getParcelableExtra("masina");
+                if (masina != null) {
+                    listaMasini.add(masina);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+    );
+
+// In onCreate:
+Button btnAdauga = findViewById(R.id.btnAdauga);
+btnAdauga.setOnClickListener(v -> {
+    Intent intent = new Intent(SecondActivity.this, AddMasinaActivity.class);
+    addMasinaLauncher.launch(intent);
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 4, CERINTA 4
+CERINTA: "Datele introduse de utilizator sunt folosite pentru
+crearea unei instante a clasei. Instanta este returnata catre
+prima activitate. Obiectul este transmis prin bundle / Parcelable.
+In activitatea principala obiectul este afisat prin TextView-uri."
+----------------------------------------------------------------
+
+PAS 1: In AddMasinaActivity.java, la butonul Salveaza, preiei datele
+       si creezi obiectul:
+------------------------------------------------------------
+Button btnSalveaza = findViewById(R.id.btnSalveaza);
+btnSalveaza.setOnClickListener(v -> {
+    EditText etMarca = findViewById(R.id.etMarca);
+    EditText etAn = findViewById(R.id.etAn);
+    CheckBox cbElectric = findViewById(R.id.cbElectric);
+    Spinner spinnerCuloare = findViewById(R.id.spinnerCuloare);
+
+    String marca = etMarca.getText().toString();
+    int an = Integer.parseInt(etAn.getText().toString());
+    boolean electric = cbElectric.isChecked();
+    CuloareMasina culoare = CuloareMasina.valueOf(
+        spinnerCuloare.getSelectedItem().toString()
+    );
+
+    // Creezi obiectul
+    Masina masina = new Masina(marca, electric, an, culoare, 200.0);
+
+    // Trimiti inapoi prin Intent
+    Intent intentRaspuns = new Intent();
+    intentRaspuns.putExtra("masina", masina);  // masina trebuie Parcelable!
+    setResult(RESULT_OK, intentRaspuns);
+    finish();
+});
+------------------------------------------------------------
+
+PAS 2: Masina trebuie sa fie Parcelable pentru a putea fi pusa in Intent.
+       Vezi Lab 6, Cerinta 4 pentru Parcelable complet.
+       SAU trimiti fiecare atribut separat:
+------------------------------------------------------------
+intentRaspuns.putExtra("marca", marca);
+intentRaspuns.putExtra("an", an);
+intentRaspuns.putExtra("electric", electric);
+// etc.
+------------------------------------------------------------
+
+PAS 3: In SecondActivity, afisezi obiectul in TextView-uri:
+------------------------------------------------------------
+// In callback-ul launcher-ului:
+TextView tvMarca = findViewById(R.id.tvMarca);
+TextView tvAn = findViewById(R.id.tvAn);
+tvMarca.setText("Marca: " + masina.getMarca());
+tvAn.setText("An: " + masina.getAnFabricatie());
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 4, CERINTA 5
+CERINTA: "Utilizati Inteligenta Artificiala pentru a imbunatati
+modul de aranjare al view-urilor in activitatea de adaugare."
+----------------------------------------------------------------
+
+Asta e mai simpla - copiezi continutul din activity_add_masina.xml
+si il pui intr-un chat AI (ex: ChatGPT) cu mesajul:
+"Imbunatateste aranjarea vizuala a acestui layout Android, pastreaza
+toate id-urile neschimbate."
+Copiezi raspunsul inapoi in fisier.
+
+
+====================================================================
+          LABORATOR 5
+====================================================================
+
+
+----------------------------------------------------------------
+LAB 5, CERINTA 1
+CERINTA: "Folositi aplicatia pe care o aveti deja."
+----------------------------------------------------------------
+
+Continuati in acelasi proiect.
+
+
+----------------------------------------------------------------
+LAB 5, CERINTA 2
+CERINTA: "Modificati clasa, mai adaugati un atribut de tip Date
+sau Time."
+----------------------------------------------------------------
+
+PAS 1: In Masina.java adaugi campul:
+------------------------------------------------------------
+import java.util.Date;
+
+// Adauga campul:
+private Date dataFabricatiei;
+------------------------------------------------------------
+
+PAS 2: Modifici constructorul sa primeasca si data:
+------------------------------------------------------------
+public Masina(String marca, boolean esteElectrica, int anFabricatie,
+              CuloareMasina culoare, double vitezaMaxima, Date dataFabricatiei) {
+    // ... celelalte campuri ...
+    this.dataFabricatiei = dataFabricatiei;
+}
+------------------------------------------------------------
+
+PAS 3: Adaugi getter si setter:
+------------------------------------------------------------
+public Date getDataFabricatiei() { return dataFabricatiei; }
+public void setDataFabricatiei(Date d) { this.dataFabricatiei = d; }
+------------------------------------------------------------
+
+PAS 4: In AddMasinaActivity.xml adaugi un Button pentru alegerea datei:
+------------------------------------------------------------
+<Button
+    android:id="@+id/btnAlegeraData"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Alege data fabricatiei" />
+
+<TextView
+    android:id="@+id/tvDataSelectata"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Nicio data selectata" />
+------------------------------------------------------------
+
+PAS 5: In AddMasinaActivity.java adaugi DatePickerDialog:
+------------------------------------------------------------
+private Date dataSelectata = new Date(); // valoare default = azi
+
+// In onCreate():
+Button btnData = findViewById(R.id.btnAlegeraData);
+TextView tvData = findViewById(R.id.tvDataSelectata);
+
+btnData.setOnClickListener(v -> {
+    Calendar cal = Calendar.getInstance();
+    DatePickerDialog dialog = new DatePickerDialog(
+        this,
+        (view, year, month, day) -> {
+            cal.set(year, month, day);
+            dataSelectata = cal.getTime();
+            // afisezi data selectata
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            tvData.setText(sdf.format(dataSelectata));
+        },
+        cal.get(Calendar.YEAR),
+        cal.get(Calendar.MONTH),
+        cal.get(Calendar.DAY_OF_MONTH)
+    );
+    dialog.show();
+});
+------------------------------------------------------------
+
+Importuri:
+  import java.util.Calendar;
+  import java.util.Date;
+  import java.text.SimpleDateFormat;
+  import java.util.Locale;
+  import android.app.DatePickerDialog;
+
+
+----------------------------------------------------------------
+LAB 5, CERINTA 3 (si 5 din lab)
+CERINTA: "Modificati activitatea de adaugare. Trimiteti obiectul
+prin Intent dependent (ActivityResultLauncher + Parcelable).
+In activitatea principala adaugati obiectul intr-o lista."
+----------------------------------------------------------------
+
+Aceasta e combinatia Lab 4 C3/C4 + Parcelable.
+Rezolvata complet la Lab 6, Cerinta 4 (Parcelable) si
+Lab 4, Cerinta 3 (launching cu ActivityResultLauncher).
+
+In SecondActivity adaugi:
+------------------------------------------------------------
+private ArrayList<Masina> listaMasini = new ArrayList<>();
+private ArrayAdapter<Masina> adapter;
+
+// In onCreate():
+adapter = new ArrayAdapter<>(this,
+    android.R.layout.simple_list_item_1, listaMasini);
+ListView lv = findViewById(R.id.listViewMasini);
+lv.setAdapter(adapter);
+
+// In callback-ul launcher-ului, cand primesti masina:
+listaMasini.add(masina);
+adapter.notifyDataSetChanged();
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 5, CERINTA 5
+CERINTA: "Folositi un ListView pentru afisarea obiectelor.
+In clasa implementati toString, iar in ListView afisati
+obiectele utilizand ArrayAdapter."
+----------------------------------------------------------------
+
+PAS 1: In Masina.java implementezi toString():
+------------------------------------------------------------
+@Override
+public String toString() {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    String dataStr = dataFabricatiei != null ? sdf.format(dataFabricatiei) : "N/A";
+    return marca + " (" + anFabricatie + ") | " + culoare.name() +
+           " | " + (esteElectrica ? "EV" : "Combustie") +
+           " | Data: " + dataStr;
+}
+------------------------------------------------------------
+
+PAS 2: In activity_second.xml adaugi ListView:
+------------------------------------------------------------
+<ListView
+    android:id="@+id/listViewMasini"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintTop_toBottomOf="@id/btnAdauga"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+------------------------------------------------------------
+
+PAS 3: In SecondActivity.java:
+------------------------------------------------------------
+private ArrayList<Masina> listaMasini = new ArrayList<>();
+private ArrayAdapter<Masina> adapter;
+
+// In onCreate():
+ListView lv = findViewById(R.id.listViewMasini);
+
+// ArrayAdapter apeleaza automat toString() al obiectului
+adapter = new ArrayAdapter<>(
+    this,
+    android.R.layout.simple_list_item_1,
+    listaMasini
+);
+lv.setAdapter(adapter);
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 5, CERINTA 6
+CERINTA: "Atunci cand utilizatorul selecteaza din ListView un
+obiect, acesta este afisat printr-un Toast."
+----------------------------------------------------------------
+
+------------------------------------------------------------
+lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view,
+                            int position, long id) {
+        Masina selectata = listaMasini.get(position);
+        Toast.makeText(SecondActivity.this,
+            selectata.toString(),
+            Toast.LENGTH_LONG).show();
+    }
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 5, CERINTA 7
+CERINTA: "Pentru evenimentul de LongItemClick pe un obiect din
+lista, acesta este sters din ListView dar si din lista de obiecte."
+----------------------------------------------------------------
+
+------------------------------------------------------------
+lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                   int position, long id) {
+        listaMasini.remove(position); // stergi din lista
+        adapter.notifyDataSetChanged(); // redesenezi ListView-ul
+        Toast.makeText(SecondActivity.this,
+            "Masina stearsa!", Toast.LENGTH_SHORT).show();
+        return true; // true = evenimentul a fost consumat
+    }
+});
+------------------------------------------------------------
+
+
+====================================================================
+          LABORATOR 6
+====================================================================
+
+
+----------------------------------------------------------------
+LAB 6, CERINTA 1
+CERINTA: "Utilizati proiectul din laboratorul precedent."
+----------------------------------------------------------------
+
+Continuati in acelasi proiect.
+
+
+----------------------------------------------------------------
+LAB 6, CERINTA 2
+CERINTA: "Modificati modul de afisare a obiectelor in ListView
+utilizand un Adapter personalizat."
+----------------------------------------------------------------
+
+PAS 1: Creezi layout-ul pentru un rand din ListView:
+   res/layout -> click dreapta -> New -> Layout Resource File
+   Name: item_masina
+
+Continut item_masina.xml:
+------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/tvItemMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvItemAn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvItemDetalii"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp" />
+
+</LinearLayout>
+------------------------------------------------------------
+
+PAS 2: Creezi clasa MasinaAdapter.java:
+   Click dreapta pe pachet -> New -> Java Class
+   Name: MasinaAdapter
+
+------------------------------------------------------------
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+import java.util.List;
+
+public class MasinaAdapter extends ArrayAdapter<Masina> {
+
+    private List<Masina> items;
+
+    public MasinaAdapter(Context context, List<Masina> items) {
+        super(context, R.layout.item_masina, items);
+        this.items = items;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // Daca randul nu exista, il inflam din XML
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext())
+                .inflate(R.layout.item_masina, parent, false);
+        }
+
+        Masina masina = items.get(position);
+
+        // Gasim view-urile din layout-ul randului
+        TextView tvMarca = convertView.findViewById(R.id.tvItemMarca);
+        TextView tvAn = convertView.findViewById(R.id.tvItemAn);
+        TextView tvDetalii = convertView.findViewById(R.id.tvItemDetalii);
+
+        // Setam datele
+        tvMarca.setText(masina.getMarca());
+        tvAn.setText("An: " + masina.getAnFabricatie());
+        tvDetalii.setText(masina.getCuloare().name() + " | " +
+            (masina.isEsteElectrica() ? "Electric" : "Combustie"));
+
+        return convertView;
+    }
+}
+------------------------------------------------------------
+
+PAS 3: In SecondActivity.java, inlocuiesti ArrayAdapter cu MasinaAdapter:
+------------------------------------------------------------
+// IN LOC DE:
+// adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaMasini);
+
+// PUNE:
+private MasinaAdapter adapter;
+
+// In onCreate():
+adapter = new MasinaAdapter(this, listaMasini);
+lv.setAdapter(adapter);
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 6, CERINTA 3
+CERINTA: "Modificati ItemClick astfel incat sa deschida activitatea
+de completare date pentru modificarea obiectului selectat.
+Campurile sunt completate cu informatiile obiectului, iar la salvare
+obiectul este MODIFICAT (nu adaugat altul nou)."
+----------------------------------------------------------------
+
+PAS 1: In SecondActivity tii minte pozitia selectata:
+------------------------------------------------------------
+private int editPosition = -1; // -1 = adaugare, >=0 = editare
+------------------------------------------------------------
+
+PAS 2: In onItemClick deschizi AddMasinaActivity cu obiectul:
+------------------------------------------------------------
+lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view,
+                            int position, long id) {
+        editPosition = position; // salvezi pozitia
+        Masina selectata = listaMasini.get(position);
+        Intent intent = new Intent(SecondActivity.this, AddMasinaActivity.class);
+        intent.putExtra("masina", selectata); // trimiti obiectul (Parcelable)
+        addMasinaLauncher.launch(intent);
+    }
+});
+------------------------------------------------------------
+
+PAS 3: In callback-ul addMasinaLauncher, daca editPosition >= 0, MODIFICI:
+------------------------------------------------------------
+// In callback:
+if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+    Masina masina = result.getData().getParcelableExtra("masina");
+    if (masina != null) {
+        if (editPosition >= 0) {
+            listaMasini.set(editPosition, masina); // INLOCUIESTE, nu adauga
+            editPosition = -1;
+        } else {
+            listaMasini.add(masina); // adaugare normala
+        }
+        adapter.notifyDataSetChanged();
+    }
+}
+------------------------------------------------------------
+
+PAS 4: In AddMasinaActivity.java verifici daca ai primit un obiect
+       si completezi campurile cu datele lui:
+------------------------------------------------------------
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_add_masina);
+
+    // ... initializari view-uri ...
+
+    // Verifici daca ai primit un obiect pentru editare
+    Masina masinaDeEditat = getIntent().getParcelableExtra("masina");
+    if (masinaDeEditat != null) {
+        // Completezi campurile cu datele existente
+        etMarca.setText(masinaDeEditat.getMarca());
+        etAn.setText(String.valueOf(masinaDeEditat.getAnFabricatie()));
+        cbElectric.setChecked(masinaDeEditat.isEsteElectrica());
+        // pentru Spinner: gasesti pozitia valorii in adapter
+        int poz = Arrays.asList(CuloareMasina.values())
+                        .indexOf(masinaDeEditat.getCuloare());
+        spinnerCuloare.setSelection(poz);
+    }
+}
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 6, CERINTA 4
+CERINTA: "Pentru trimiterea obiectelor intre activitati trebuie
+sa folositi Parcelable."
+----------------------------------------------------------------
+
+Masina.java trebuie sa implementeze Parcelable:
+------------------------------------------------------------
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Masina implements Parcelable {
+
+    private String marca;
+    private boolean esteElectrica;
+    private int anFabricatie;
+    private CuloareMasina culoare;
+    private double vitezaMaxima;
+
+    // Constructor normal
+    public Masina(String marca, boolean esteElectrica, int anFabricatie,
+                  CuloareMasina culoare, double vitezaMaxima) {
+        this.marca = marca;
+        this.esteElectrica = esteElectrica;
+        this.anFabricatie = anFabricatie;
+        this.culoare = culoare;
+        this.vitezaMaxima = vitezaMaxima;
+    }
+
+    // Constructor din Parcel - citeste IN ACEEASI ORDINE ca writeToParcel
+    protected Masina(Parcel in) {
+        marca = in.readString();
+        esteElectrica = in.readByte() != 0;
+        anFabricatie = in.readInt();
+        culoare = CuloareMasina.valueOf(in.readString());
+        vitezaMaxima = in.readDouble();
+    }
+
+    // Scrie obiectul (trebuie ACEEASI ORDINE ca constructorul din Parcel)
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(marca);
+        dest.writeByte((byte) (esteElectrica ? 1 : 0));
+        dest.writeInt(anFabricatie);
+        dest.writeString(culoare.name());
+        dest.writeDouble(vitezaMaxima);
+    }
+
+    @Override
+    public int describeContents() { return 0; }
+
+    // Creator obligatoriu
+    public static final Creator<Masina> CREATOR = new Creator<Masina>() {
+        @Override
+        public Masina createFromParcel(Parcel in) { return new Masina(in); }
+
+        @Override
+        public Masina[] newArray(int size) { return new Masina[size]; }
+    };
+
+    // Getteri, setteri, toString...
+}
+------------------------------------------------------------
+
+Cum trimiti:
+------------------------------------------------------------
+Intent intent = new Intent(this, AddMasinaActivity.class);
+intent.putExtra("masina", masinaSelectata); // obiectul Parcelable
+------------------------------------------------------------
+
+Cum primesti:
+------------------------------------------------------------
+Masina masina = getIntent().getParcelableExtra("masina");
+------------------------------------------------------------
+
+
+====================================================================
+          LABORATOR 7
+====================================================================
+
+
+----------------------------------------------------------------
+LAB 7, CERINTA 1
+CERINTA: "Utilizati proiectul din laboratorul precedent."
+----------------------------------------------------------------
+
+Continuati proiectul.
+
+
+----------------------------------------------------------------
+LAB 7, CERINTA 2
+CERINTA: "Modificati activitatea de adaugare, astfel incat atunci
+cand un nou obiect este creat, acesta sa fie salvat si intr-un
+fisier. Salvarea se face prin adaugarea in fisier (nu suprascrie)."
+----------------------------------------------------------------
+
+In AddMasinaActivity.java, in butonul Salveaza, dupa createarea
+obiectului Masina, INAINTE de setResult:
+------------------------------------------------------------
+private void salveazaInFisier(Masina masina) {
+    try {
+        // MODE_APPEND = adauga la sfarsitul fisierului
+        // MODE_PRIVATE = doar aceasta aplicatie vede fisierul
+        FileOutputStream fos = openFileOutput("masini.txt", MODE_APPEND);
+
+        // Formatul liniei - orice separator care nu apare in date (ex: ,)
+        String linie = masina.getMarca() + ","
+                + masina.getAnFabricatie() + ","
+                + masina.isEsteElectrica() + ","
+                + masina.getCuloare().name() + ","
+                + masina.getVitezaMaxima() + "\n";
+        fos.write(linie.getBytes());
+        fos.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+------------------------------------------------------------
+
+Adaugi apelul in onClick al butonului Salveaza:
+------------------------------------------------------------
+btnSalveaza.setOnClickListener(v -> {
+    // ... creezi Masina masina = new Masina(...) ...
+    salveazaInFisier(masina); // <-- salvezi in fisier
+    Intent intentRaspuns = new Intent();
+    intentRaspuns.putExtra("masina", masina);
+    setResult(RESULT_OK, intentRaspuns);
+    finish();
+});
+------------------------------------------------------------
+
+Import: import java.io.FileOutputStream; import java.io.IOException;
+
+In SecondActivity.java, in onCreate(), citesti lista din fisier:
+------------------------------------------------------------
+private void citesteListaDinFisier() {
+    try {
+        FileInputStream fis = openFileInput("masini.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+        String linie;
+        while ((linie = reader.readLine()) != null) {
+            if (!linie.trim().isEmpty()) {
+                String[] parti = linie.split(",");
+                String marca = parti[0];
+                int an = Integer.parseInt(parti[1]);
+                boolean electric = Boolean.parseBoolean(parti[2]);
+                CuloareMasina culoare = CuloareMasina.valueOf(parti[3]);
+                double viteza = Double.parseDouble(parti[4]);
+                listaMasini.add(new Masina(marca, electric, an, culoare, viteza));
+            }
+        }
+        reader.close();
+        adapter.notifyDataSetChanged();
+    } catch (IOException e) {
+        e.printStackTrace(); // fisierul nu exista la prima rulare -> OK
+    }
+}
+------------------------------------------------------------
+
+Apelezi in onCreate():
+------------------------------------------------------------
+citesteListaDinFisier();
+------------------------------------------------------------
+
+Import: import java.io.*; (FileInputStream, BufferedReader, InputStreamReader)
+
+
+----------------------------------------------------------------
+LAB 7, CERINTA 3
+CERINTA: "Modificati LongItemClick astfel incat sa fie salvat
+obiectul in un fisier de FAVORITE. Fisier SEPARAT de cel initial."
+----------------------------------------------------------------
+
+In SecondActivity.java, in onItemLongClick:
+------------------------------------------------------------
+lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                   int position, long id) {
+        Masina m = listaMasini.get(position);
+
+        // Salvezi in fisierul SEPARAT de favorite
+        try {
+            FileOutputStream fos = openFileOutput("favorite.txt", MODE_APPEND);
+            String linie = m.getMarca() + ","
+                    + m.getAnFabricatie() + ","
+                    + m.isEsteElectrica() + ","
+                    + m.getCuloare().name() + ","
+                    + m.getVitezaMaxima() + "\n";
+            fos.write(linie.getBytes());
+            fos.close();
+            Toast.makeText(SecondActivity.this,
+                "Salvat in favorite!", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return true; // evenimentul a fost consumat
+    }
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 7, CERINTA 4
+CERINTA: "Adaugati o nouA activitate de setari in care utilizatorul
+isi poate seta dimensiunea si culoarea textelor. Setarile sunt
+salvate in SharedPreferences si folosite in activitatea de adaugare."
+----------------------------------------------------------------
+
+PAS 1: Creezi SettingsActivity:
+   Click dreapta pe pachet -> New -> Activity -> Empty Views Activity
+   Name: SettingsActivity
+
+PAS 2: In activity_settings.xml adaugi controale pentru setari:
+------------------------------------------------------------
+<LinearLayout ...orientation="vertical" padding="16dp">
+
+  <TextView android:text="Dimensiune text:" ... />
+
+  <!-- SeekBar pentru dimensiune (reprezentat ca progres 10-30) -->
+  <SeekBar
+      android:id="@+id/seekBarDim"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:max="20"
+      android:progress="4" />
+
+  <TextView
+      android:id="@+id/tvDimCurenta"
+      android:text="14sp" ... />
+
+  <TextView android:text="Culoare text:" ... />
+
+  <!-- RadioGroup pentru culori -->
+  <RadioGroup android:id="@+id/radioGroupCuloare" ...>
+      <RadioButton android:id="@+id/radioNegru" android:text="Negru" />
+      <RadioButton android:id="@+id/radioRosu" android:text="Rosu" />
+      <RadioButton android:id="@+id/radioAlbastru" android:text="Albastru" />
+  </RadioGroup>
+
+  <Button android:id="@+id/btnSalveazaSetari" android:text="Salveaza setarile" />
+
+</LinearLayout>
+------------------------------------------------------------
+
+PAS 3: In SettingsActivity.java:
+------------------------------------------------------------
+private static final String PREFS_NAME = "setari_app";
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_settings);
+
+    SeekBar seekBar = findViewById(R.id.seekBarDim);
+    TextView tvDim = findViewById(R.id.tvDimCurenta);
+    RadioGroup rgCuloare = findViewById(R.id.radioGroupCuloare);
+    Button btnSalveaza = findViewById(R.id.btnSalveazaSetari);
+
+    // Citesti setarile existente si le afisezi
+    SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+    float dimCurenta = prefs.getFloat("dimensiuneText", 14f);
+    int culoareCurenta = prefs.getInt("culoareText", Color.BLACK);
+
+    seekBar.setProgress((int)(dimCurenta - 10)); // 10sp=0, 30sp=20
+    tvDim.setText(dimCurenta + "sp");
+
+    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar s, int progress, boolean fromUser) {
+            tvDim.setText((progress + 10) + "sp");
+        }
+        @Override public void onStartTrackingTouch(SeekBar s) {}
+        @Override public void onStopTrackingTouch(SeekBar s) {}
+    });
+
+    btnSalveaza.setOnClickListener(v -> {
+        float dimensiune = seekBar.getProgress() + 10f;
+
+        int culoare = Color.BLACK;
+        int radioId = rgCuloare.getCheckedRadioButtonId();
+        if (radioId == R.id.radioRosu) culoare = Color.RED;
+        else if (radioId == R.id.radioAlbastru) culoare = Color.BLUE;
+
+        // Salvezi in SharedPreferences
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putFloat("dimensiuneText", dimensiune);
+        editor.putInt("culoareText", culoare);
+        editor.apply(); // aplica asincron
+
+        Toast.makeText(this, "Setari salvate!", Toast.LENGTH_SHORT).show();
+        finish(); // inchizi activitatea
+    });
+}
+------------------------------------------------------------
+
+PAS 4: Adaugi buton in SecondActivity care deschide SettingsActivity:
+------------------------------------------------------------
+Button btnSetari = findViewById(R.id.btnSetari);
+btnSetari.setOnClickListener(v -> {
+    Intent intent = new Intent(SecondActivity.this, SettingsActivity.class);
+    startActivity(intent);
+});
+------------------------------------------------------------
+
+PAS 5: In AddMasinaActivity.java, in onCreate(), citesti setarile si
+       le aplici pe view-urile cu text:
+------------------------------------------------------------
+private void aplicaSetari() {
+    SharedPreferences prefs = getSharedPreferences("setari_app", MODE_PRIVATE);
+    float dimensiune = prefs.getFloat("dimensiuneText", 14f);
+    int culoare = prefs.getInt("culoareText", Color.BLACK);
+
+    // Aplica pe TextView si EditText-uri
+    TextView tvTitlu = findViewById(R.id.tvTitlu);
+    EditText etMarca = findViewById(R.id.etMarca);
+    EditText etAn = findViewById(R.id.etAn);
+
+    tvTitlu.setTextSize(dimensiune);
+    tvTitlu.setTextColor(culoare);
+    etMarca.setTextSize(dimensiune);
+    etMarca.setTextColor(culoare);
+    etAn.setTextSize(dimensiune);
+    etAn.setTextColor(culoare);
+}
+------------------------------------------------------------
+
+Adaugi apelul in onCreate() dupa initializari:
+------------------------------------------------------------
+aplicaSetari();
+------------------------------------------------------------
+
+
+====================================================================
+          LABORATOR 8 — ROOM (baza de date SQLite)
+====================================================================
+
+
+----------------------------------------------------------------
+LAB 8, SETUP
+CERINTA: "Implementarea unei baze de date cu ROOM."
+----------------------------------------------------------------
+
+PAS 1: Adaugi dependintele ROOM in gradle.
+
+In gradle/libs.versions.toml adaugi in sectiunile corespunzatoare:
+------------------------------------------------------------
+[versions]
+room = "2.6.1"
+
+[libraries]
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+------------------------------------------------------------
+
+In app/build.gradle.kts, in dependencies {}:
+------------------------------------------------------------
+implementation(libs.room.runtime)
+annotationProcessor(libs.room.compiler)
+------------------------------------------------------------
+
+Apesi "Sync Now" (albastru sus) si astepti.
+
+
+----------------------------------------------------------------
+LAB 8, CERINTA 1
+CERINTA: "Metoda de inserare in baza de date a unui obiect."
+----------------------------------------------------------------
+
+PAS 1 - Creezi MasinaEntity.java (clasa care reprezinta tabela):
+------------------------------------------------------------
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "masini")
+public class MasinaEntity {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    private String marca;
+    private int anFabricatie;
+    private double vitezaMaxima;
+    private boolean esteElectrica;
+
+    // Constructor (FARA id - se autogenereaza)
+    public MasinaEntity(String marca, int anFabricatie,
+                        double vitezaMaxima, boolean esteElectrica) {
+        this.marca = marca;
+        this.anFabricatie = anFabricatie;
+        this.vitezaMaxima = vitezaMaxima;
+        this.esteElectrica = esteElectrica;
+    }
+
+    // Getteri si setteri pentru TOATE (inclusiv id):
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public String getMarca() { return marca; }
+    public void setMarca(String m) { this.marca = m; }
+    public int getAnFabricatie() { return anFabricatie; }
+    public void setAnFabricatie(int a) { this.anFabricatie = a; }
+    public double getVitezaMaxima() { return vitezaMaxima; }
+    public void setVitezaMaxima(double v) { this.vitezaMaxima = v; }
+    public boolean isEsteElectrica() { return esteElectrica; }
+    public void setEsteElectrica(boolean e) { this.esteElectrica = e; }
+}
+------------------------------------------------------------
+
+PAS 2 - Creezi MasinaDao.java (interfata cu metodele SQL):
+------------------------------------------------------------
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+import java.util.List;
+
+@Dao
+public interface MasinaDao {
+
+    // Cerinta 1: Inserare
+    @Insert
+    void inserareMasina(MasinaEntity masina);
+
+    // Cerinta 2: Select toate (vezi mai jos)
+    @Query("SELECT * FROM masini")
+    List<MasinaEntity> selectToateMasinile();
+
+    // Cerinta 3: Select dupa string
+    @Query("SELECT * FROM masini WHERE marca = :marca")
+    List<MasinaEntity> selectDupaMarca(String marca);
+
+    // Cerinta 4: Select dupa interval int
+    @Query("SELECT * FROM masini WHERE anFabricatie BETWEEN :anMin AND :anMax")
+    List<MasinaEntity> selectDupaIntervalAn(int anMin, int anMax);
+
+    // Cerinta 5: Stergere dupa valoare numerica
+    @Query("DELETE FROM masini WHERE vitezaMaxima > :viteza")
+    void stergeDupaViteza(double viteza);
+
+    // Cerinta 6: Update +1 unde marca incepe cu litera
+    @Query("UPDATE masini SET anFabricatie = anFabricatie + 1 WHERE marca LIKE :litera || '%'")
+    void cresteAnDupaLitera(String litera);
+}
+------------------------------------------------------------
+
+PAS 3 - Creezi MasinaDatabase.java (singleton):
+------------------------------------------------------------
+import android.content.Context;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+
+@Database(entities = {MasinaEntity.class}, version = 1, exportSchema = false)
+public abstract class MasinaDatabase extends RoomDatabase {
+
+    public abstract MasinaDao masinaDao(); // ROOM genereaza implementarea
+
+    private static MasinaDatabase instance;
+
+    public static synchronized MasinaDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(
+                    context.getApplicationContext(),
+                    MasinaDatabase.class,
+                    "masini_database"
+            ).fallbackToDestructiveMigration().build();
+        }
+        return instance;
+    }
+}
+------------------------------------------------------------
+
+PAS 4 - In DatabaseActivity.java obtii DAO-ul si apelezi metodele:
+REGULA: Operatiile DB se fac INTOTDEAUNA pe thread separat (nu pe UI thread)
+------------------------------------------------------------
+MasinaDao masinaDao = MasinaDatabase.getInstance(this).masinaDao();
+
+// Inserare - in onClick:
+btnInserare.setOnClickListener(v -> {
+    String marca = etMarca.getText().toString();
+    int an = Integer.parseInt(etAn.getText().toString());
+
+    new Thread(() -> {
+        MasinaEntity m = new MasinaEntity(marca, an, 200.0, false);
+        masinaDao.inserareMasina(m);
+        runOnUiThread(() ->
+            Toast.makeText(this, "Inserat in DB!", Toast.LENGTH_SHORT).show()
+        );
+    }).start();
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 8, CERINTA 2
+CERINTA: "Metoda de selectie a tuturor inregistrarilor din tabela."
+In activitate: ListView care prezinta toate inregistrarile.
+----------------------------------------------------------------
+
+------------------------------------------------------------
+btnSelectTot.setOnClickListener(v -> {
+    new Thread(() -> {
+        List<MasinaEntity> masini = masinaDao.selectToateMasinile();
+
+        // Construiesti lista de string-uri pentru ListView
+        ArrayList<String> rezultate = new ArrayList<>();
+        for (MasinaEntity m : masini) {
+            rezultate.add(m.getId() + ". " + m.getMarca() +
+                          " | " + m.getAnFabricatie());
+        }
+
+        runOnUiThread(() -> {
+            // Actualizeaza ListView-ul
+            ArrayAdapter<String> adapterDB = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                rezultate
+            );
+            listView.setAdapter(adapterDB);
+        });
+    }).start();
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 8, CERINTA 3
+CERINTA: "Metoda de selectie a obiectului care are valoarea string
+egala cu o valoare primita ca parametru."
+----------------------------------------------------------------
+
+------------------------------------------------------------
+btnSelectMarca.setOnClickListener(v -> {
+    String marcaCautata = etMarca.getText().toString();
+
+    new Thread(() -> {
+        List<MasinaEntity> masini = masinaDao.selectDupaMarca(marcaCautata);
+        ArrayList<String> rezultate = new ArrayList<>();
+        for (MasinaEntity m : masini) {
+            rezultate.add(m.getMarca() + " | " + m.getAnFabricatie());
+        }
+        runOnUiThread(() -> {
+            ArrayAdapter<String> adapterDB = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, rezultate);
+            listView.setAdapter(adapterDB);
+        });
+    }).start();
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 8, CERINTA 4
+CERINTA: "Metoda de selectie a obiectelor care au valoarea intreaga
+intr-un interval setat de catre doi parametri."
+In activitate: ListView prezinta rezultatele.
+----------------------------------------------------------------
+
+------------------------------------------------------------
+btnSelectInterval.setOnClickListener(v -> {
+    int anMin = Integer.parseInt(etAnMin.getText().toString());
+    int anMax = Integer.parseInt(etAnMax.getText().toString());
+
+    new Thread(() -> {
+        List<MasinaEntity> masini = masinaDao.selectDupaIntervalAn(anMin, anMax);
+        ArrayList<String> rezultate = new ArrayList<>();
+        for (MasinaEntity m : masini) {
+            rezultate.add(m.getMarca() + " | " + m.getAnFabricatie());
+        }
+        runOnUiThread(() -> {
+            ArrayAdapter<String> adapterDB = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, rezultate);
+            listView.setAdapter(adapterDB);
+        });
+    }).start();
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 8, CERINTA 5
+CERINTA: "Metoda de stergere a inregistrarilor care au o valoare
+numerica mai mare/mica decat un parametru. Verificata prin afisarea
+elementelor actualizate in ListView."
+----------------------------------------------------------------
+
+------------------------------------------------------------
+btnStergere.setOnClickListener(v -> {
+    double viteza = Double.parseDouble(etViteza.getText().toString());
+
+    new Thread(() -> {
+        masinaDao.stergeDupaViteza(viteza); // sterge
+
+        // Dupa stergere, afisezi ce a ramas
+        List<MasinaEntity> masini = masinaDao.selectToateMasinile();
+        ArrayList<String> rezultate = new ArrayList<>();
+        for (MasinaEntity m : masini) {
+            rezultate.add(m.getMarca() + " | " + m.getVitezaMaxima());
+        }
+        runOnUiThread(() -> {
+            ArrayAdapter<String> adapterDB = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, rezultate);
+            listView.setAdapter(adapterDB);
+            Toast.makeText(this, "Stergere efectuata!", Toast.LENGTH_SHORT).show();
+        });
+    }).start();
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 8, CERINTA 6
+CERINTA: "Metoda de crestere cu o unitate a valorii numerice
+pentru toate inregistrarile a caror valoare string incepe cu
+o litera primita ca parametru. Verificata prin afisarea elementelor
+actualizate."
+----------------------------------------------------------------
+
+------------------------------------------------------------
+btnUpdate.setOnClickListener(v -> {
+    String litera = etLitera.getText().toString();
+
+    new Thread(() -> {
+        masinaDao.cresteAnDupaLitera(litera); // update
+
+        // Dupa update, afisezi ce s-a schimbat
+        List<MasinaEntity> masini = masinaDao.selectToateMasinile();
+        ArrayList<String> rezultate = new ArrayList<>();
+        for (MasinaEntity m : masini) {
+            rezultate.add(m.getMarca() + " | " + m.getAnFabricatie());
+        }
+        runOnUiThread(() -> {
+            ArrayAdapter<String> adapterDB = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, rezultate);
+            listView.setAdapter(adapterDB);
+            Toast.makeText(this, "Update efectuat!", Toast.LENGTH_SHORT).show();
+        });
+    }).start();
+});
+------------------------------------------------------------
+
+
+====================================================================
+          LABORATOR 9 — Imagini din internet + WebView + Executors
+====================================================================
+
+
+----------------------------------------------------------------
+LAB 9, SETUP
+CERINTA: "Cautati pe Google minim 5 imagini. Adaugati o noua
+activitate cu un buton in MainActivity care sa o deschida."
+----------------------------------------------------------------
+
+PAS 1: In AndroidManifest.xml adaugi permisiunea INTERNET
+       (INAINTE de <application>):
+------------------------------------------------------------
+<uses-permission android:name="android.permission.INTERNET" />
+------------------------------------------------------------
+
+PAS 2: Creezi GalerieActivity:
+   Click dreapta pe pachet -> New -> Activity -> Empty Views Activity
+   Name: GalerieActivity
+
+PAS 3: In activitatea principala (SecondActivity sau MainActivity)
+       adaugi un buton care deschide GalerieActivity:
+------------------------------------------------------------
+// In layout XML:
+<Button
+    android:id="@+id/btnGalerie"
+    android:text="Galerie imagini" ... />
+
+// In Java:
+Button btnGalerie = findViewById(R.id.btnGalerie);
+btnGalerie.setOnClickListener(v -> {
+    Intent intent = new Intent(this, GalerieActivity.class);
+    startActivity(intent);
+});
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 9, CERINTA 1 + 2
+CERINTA: "In activitate: ListView cu CustomAdapter care contine
+imaginile si text de descriere. Imaginile sunt aduse in memorie
+la deschiderea activitatii. Trebuie sa folositi Executors."
+----------------------------------------------------------------
+
+PAS 1: Creezi clasa model ImageItem.java:
+------------------------------------------------------------
+import android.graphics.Bitmap;
+
+public class ImageItem {
+    private String imageUrl;   // URL-ul imaginii (pentru descarcare)
+    private String descriere;  // textul afisat in ListView
+    private String webUrl;     // URL-ul site-ului deschis la click
+    private Bitmap bitmap;     // imaginea descarcata (initial null)
+
+    public ImageItem(String imageUrl, String descriere, String webUrl) {
+        this.imageUrl = imageUrl;
+        this.descriere = descriere;
+        this.webUrl = webUrl;
+        this.bitmap = null; // se seteaza dupa descarcare
+    }
+
+    public String getImageUrl() { return imageUrl; }
+    public String getDescriere() { return descriere; }
+    public String getWebUrl() { return webUrl; }
+    public Bitmap getBitmap() { return bitmap; }
+    public void setBitmap(Bitmap b) { this.bitmap = b; }
+}
+------------------------------------------------------------
+
+PAS 2: Creezi layout-ul pentru un rand din ListView: item_image.xml
+   res/layout -> New -> Layout Resource File -> item_image
+------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/ivImagine"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:background="#CCCCCC" />
+
+    <TextView
+        android:id="@+id/tvDescriere"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:padding="8dp" />
+
+</LinearLayout>
+------------------------------------------------------------
+
+PAS 3: Creezi ImageItemAdapter.java:
+------------------------------------------------------------
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import java.util.List;
+
+public class ImageItemAdapter extends ArrayAdapter<ImageItem> {
+
+    private List<ImageItem> items;
+
+    public ImageItemAdapter(Context context, List<ImageItem> items) {
+        super(context, R.layout.item_image, items);
+        this.items = items;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext())
+                .inflate(R.layout.item_image, parent, false);
+        }
+
+        ImageItem item = items.get(position);
+        ImageView iv = convertView.findViewById(R.id.ivImagine);
+        TextView tv = convertView.findViewById(R.id.tvDescriere);
+
+        tv.setText(item.getDescriere());
+        if (item.getBitmap() != null) {
+            iv.setImageBitmap(item.getBitmap()); // imaginea descarcata
+        } else {
+            iv.setImageBitmap(null); // placeholder gri pana se descarca
+        }
+
+        return convertView;
+    }
+}
+------------------------------------------------------------
+
+PAS 4: In GalerieActivity.java - descarca imaginile cu Executors:
+------------------------------------------------------------
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+public class GalerieActivity extends AppCompatActivity {
+
+    private ArrayList<ImageItem> listaImagini = new ArrayList<>();
+    private ImageItemAdapter adapter;
+    private ExecutorService executorService;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_galerie);
+
+        // Adaugi itemele cu URL-uri reale (cautate pe Google)
+        listaImagini.add(new ImageItem(
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/2020_Porsche_911_Carrera_S.jpg/800px-2020_Porsche_911_Carrera_S.jpg",
+            "Porsche 911",
+            "https://www.porsche.com"
+        ));
+        listaImagini.add(new ImageItem(
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/2019_BMW_M850i_xDrive_%28facelift%2C_black%29%2C_front_8.15.19.jpg/800px-2019_BMW_M850i_xDrive_%28facelift%2C_black%29%2C_front_8.15.19.jpg",
+            "BMW M8",
+            "https://www.bmw.com"
+        ));
+        // ... adaugi pana la 5 total
+
+        // Setezi adapterul pe ListView
+        adapter = new ImageItemAdapter(this, listaImagini);
+        ListView lv = findViewById(R.id.lvImagini);
+        lv.setAdapter(adapter);
+
+        // La click pe item - deschide WebViewActivity (Cerinta 3)
+        lv.setOnItemClickListener((parent, view, position, id) -> {
+            ImageItem item = listaImagini.get(position);
+            Intent intent = new Intent(GalerieActivity.this, WebViewActivity.class);
+            intent.putExtra("webUrl", item.getWebUrl());
+            startActivity(intent);
+        });
+
+        // Executors: pool de 5 thread-uri, descarca imaginile in paralel
+        executorService = Executors.newFixedThreadPool(5);
+        descarcaToateImaginile();
+    }
+
+    private void descarcaToateImaginile() {
+        for (ImageItem item : listaImagini) {
+            executorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    // Descarca pe background thread
+                    Bitmap bmp = descarcaImagine(item.getImageUrl());
+                    if (bmp != null) {
+                        item.setBitmap(bmp);
+                        // Actualizeaza UI pe UI thread
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    private Bitmap descarcaImagine(String imageUrl) {
+        try {
+            URL url = new URL(imageUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(10000); // 10 secunde timeout
+            connection.setReadTimeout(10000);
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            connection.connect();
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                InputStream inputStream = connection.getInputStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                inputStream.close();
+                connection.disconnect();
+                return bitmap;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // daca esueaza, returneaza null
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (executorService != null) {
+            executorService.shutdown(); // opreste thread-urile
+        }
+    }
+}
+------------------------------------------------------------
+
+In activity_galerie.xml:
+------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lvImagini"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+------------------------------------------------------------
+
+
+----------------------------------------------------------------
+LAB 9, CERINTA 3
+CERINTA: "Cand utilizatorul da click pe un item din ListView se
+deschide o alta activitate cu un WebView in care se deschide
+direct un link al unui site/platforma web."
+----------------------------------------------------------------
+
+PAS 1: Creezi WebViewActivity:
+   Click dreapta pe pachet -> New -> Activity -> Empty Views Activity
+   Name: WebViewActivity
+
+PAS 2: In activity_webview.xml:
+------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnInapoiWeb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inapoi" />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
+------------------------------------------------------------
+
+PAS 3: In WebViewActivity.java:
+------------------------------------------------------------
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+public class WebViewActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_webview);
+
+        // Buton inapoi
+        Button btnInapoi = findViewById(R.id.btnInapoiWeb);
+        btnInapoi.setOnClickListener(v -> finish());
+
+        // Preiei URL-ul primit prin Intent
+        String webUrl = getIntent().getStringExtra("webUrl");
+
+        WebView webView = findViewById(R.id.webView);
+
+        // Configurare obligatorie
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);  // activeaza JavaScript
+        settings.setDomStorageEnabled(true);  // activeaza DOM storage
+
+        // Face ca linkurile sa se deschida IN APLICATIE, nu in browser
+        webView.setWebViewClient(new WebViewClient());
+
+        // Incarca pagina
+        if (webUrl != null && !webUrl.isEmpty()) {
+            webView.loadUrl(webUrl);
+        }
+    }
+}
+------------------------------------------------------------
+
+PAS 4: Click-ul din GalerieActivity (deja pus in Cerinta 1+2):
+------------------------------------------------------------
+lv.setOnItemClickListener((parent, view, position, id) -> {
+    ImageItem item = listaImagini.get(position);
+    Intent intent = new Intent(GalerieActivity.this, WebViewActivity.class);
+    intent.putExtra("webUrl", item.getWebUrl()); // trimiti URL-ul
+    startActivity(intent);
+});
+------------------------------------------------------------
+
+PAS 5: In AndroidManifest.xml, WebViewActivity trebuie declarata
+       (se adauga automat daca ai creat-o prin wizard):
+------------------------------------------------------------
+<activity android:name=".WebViewActivity" android:exported="false" />
+------------------------------------------------------------
+
+
+====================================================================
+CHEAT SHEET RAPID — UN RAND PER OPERATIE
+====================================================================
+
+Creare proiect          -> File > New > New Project > Empty Views > Java > API 23
+Creare activitate       -> Click dreapta pe pachet > New > Activity > Empty Views
+Schimbare LAUNCHER      -> Manifest: muti <intent-filter> MAIN/LAUNCHER
+Buton in XML            -> <Button android:id android:text constraints />
+Buton in Java           -> findViewById + setOnClickListener
+Navigare simpla         -> new Intent(AiciActivity.this, AcoloActivity.class) + startActivity
+Trimite date            -> intent.putExtra("cheie", valoare) | sau Bundle
+Primeste date           -> getIntent().getStringExtra/getIntExtra/getBooleanExtra
+Primeste inapoi         -> ActivityResultLauncher + registerForActivityResult
+Trimite inapoi          -> setResult(RESULT_OK, intent) + finish()
+Toast                   -> Toast.makeText(this, "text", LENGTH_SHORT).show()
+strings.xml             -> <string name="cheie">text</string> | @string/cheie in XML
+Internationalizare      -> res/values-fr/strings.xml + aceleasi chei traduse
+Loguri                  -> Log.e/w/d/i/v("TAG", "mesaj") + import android.util.Log
+Lifecycle               -> Override onStart/onResume/onPause/onStop + super.metoda()
+ListView simplu         -> ArrayList + ArrayAdapter + lv.setAdapter + notifyDataSetChanged
+ListView custom         -> item_layout.xml + clasa extends ArrayAdapter + getView()
+Click pe item ListView  -> lv.setOnItemClickListener
+Long click pe item      -> lv.setOnItemLongClickListener (return true)
+Parcelable              -> implements Parcelable + writeToParcel + constructor(Parcel) + CREATOR
+Fisier intern scriere   -> openFileOutput("f.txt", MODE_APPEND) + fos.write
+Fisier intern citire    -> openFileInput("f.txt") + BufferedReader + readLine()
+SharedPreferences save  -> getSharedPreferences().edit().putXxx().apply()
+SharedPreferences read  -> getSharedPreferences().getXxx("cheie", default)
+ROOM dependinte         -> libs.versions.toml + build.gradle.kts
+ROOM Entity             -> @Entity(tableName) + @PrimaryKey(autoGenerate=true)
+ROOM Dao                -> @Dao interface + @Insert/@Query
+ROOM Database           -> @Database + abstract MasinaDao masinaDao() + singleton getInstance
+ROOM apel               -> new Thread(() -> { dao.metoda(); runOnUiThread(-> update UI); }).start()
+Imagini internet        -> Executors.newFixedThreadPool(5) + submit + HttpURLConnection + BitmapFactory
+WebView                 -> INTERNET permission + WebSettings + WebViewClient + loadUrl
+Permisiune INTERNET     -> <uses-permission android:name="android.permission.INTERNET" />
+
+====================================================================
+Sfarsit ghid.
+====================================================================

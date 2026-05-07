@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lab 10: Layout pentru activitatea de vreme AccuWeather
+     Contine: Spinner (zile) + EditText (oras) + Button (cauta) + TextView (rezultat) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WeatherActivity">
+
+    <!-- Lab 10 Partea III: Spinner pentru selectia numarului de zile de prognoza
+         Valorile: "1 zi", "5 zile", "10 zile" — determina endpoint-ul folosit la API -->
+    <Spinner
+        android:id="@+id/spinnerZile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Lab 10 Partea I: EditText unde utilizatorul introduce numele orasului cautat -->
+    <EditText
+        android:id="@+id/editTextOras"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Introduceti numele orasului"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerZile" />
+
+    <!-- Lab 10 Partea I: Buton care lanseaza AsyncTask-ul pentru cautarea vremii -->
+    <Button
+        android:id="@+id/buttonCauta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Cauta vreme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextOras" />
+
+    <!-- Lab 10 Partea I + II + III: TextView unde se afiseaza:
+         Partea I: Key-ul orasului
+         Partea II: temperatura minima si maxima
+         Partea III: toate zilele din prognoza selectata -->
+    <TextView
+        android:id="@+id/textViewRezultat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:scrollbars="vertical"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCauta" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

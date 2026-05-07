@@ -199,6 +199,16 @@ public class SecondActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Lab 10: Buton care deschide WeatherActivity (prognoza meteo AccuWeather)
+        Button buttonWeather = findViewById(R.id.button_weather);
+        buttonWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SecondActivity.this, WeatherActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // Cerinta 3 Lab 7: Metoda care salveaza un obiect Masina in fisierul de FAVORITE
